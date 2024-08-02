@@ -8,6 +8,7 @@ import com.example.casestudydanang.util.Database;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class BookRepository implements IBookRepository {
@@ -16,7 +17,7 @@ public class BookRepository implements IBookRepository {
             "FROM Book b " +
             "JOIN Category c ON b.category_id = c.category_id " +
             "JOIN Publisher p ON b.publisher_id = p.publisher_id " +
-            "ORDER BY b.book_id";
+            "ORDER BY b.book_id desc ";
     private static final String SHOW_BOOK_BY_ID = "SELECT b.*, c.category_name, p.publisher_name " +
             "FROM Book b " +
             "JOIN Category c ON b.category_id = c.category_id " +
@@ -25,6 +26,13 @@ public class BookRepository implements IBookRepository {
 
     private static final String DELETE_BOOK_BY_ID = "DELETE FROM Book WHERE book_id = ?";
 
+    private static final String INSERT_INTO_BOOK = "INSERT INTO Book (name, description, image_url, status, category_id, publisher_id) VALUES (?, ?, ?, ?, ?, ?)";
+
+    private static final String SEARCH_CATEGORY = "SELECT b.*, c.category_name, p.publisher_name " +
+            "FROM Book b " +
+            "JOIN Category c ON b.category_id = c.category_id " +
+            "JOIN Publisher p ON b.publisher_id = p.publisher_id " +
+            "WHERE c.category_name LIKE ?";
 
 
 
@@ -47,8 +55,8 @@ public class BookRepository implements IBookRepository {
                 book.setStatus(rs.getBoolean("status"));
                 book.setCategoryId(rs.getInt("category_id"));
                 book.setPublisherId(rs.getInt("publisher_id"));
-                book.setCategoryName(rs.getString("category_name")); // New
-                book.setPublisherName(rs.getString("publisher_name")); // New
+                book.setCategoryName(rs.getString("category_name"));
+                book.setPublisherName(rs.getString("publisher_name"));
                 book.setCreatedAt(rs.getTimestamp("created_at"));
                 books.add(book);
             }
@@ -61,8 +69,7 @@ public class BookRepository implements IBookRepository {
 
 
     public void save(Book book) {
-        String sql = "INSERT INTO Book (name, description, image_url, status, category_id, publisher_id) VALUES (?, ?, ?, ?, ?, ?)";
-        try (Connection conn = Database.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = Database.getConnection(); PreparedStatement stmt = conn.prepareStatement(INSERT_INTO_BOOK)) {
             stmt.setString(1, book.getName());
             stmt.setString(2, book.getDescription());
             stmt.setString(3, book.getImageUrl());
@@ -131,6 +138,36 @@ public class BookRepository implements IBookRepository {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public List<Book> findByCategoryName(String categoryName) {
+        List<Book> books = new ArrayList<>();
+        try (Connection conn = Database.getConnection();
+             PreparedStatement preparedStatement = conn.prepareStatement(SEARCH_CATEGORY)) {
+            preparedStatement.setString(1, "%" + categoryName + "%"); // Sử dụng '%' cho pattern matching
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                while (rs.next()) {
+                    Book book = new Book();
+                    book.setId(rs.getInt("book_id"));
+                    book.setName(rs.getString("name"));
+                    book.setDescription(rs.getString("description"));
+                    book.setImageUrl(rs.getString("image_url"));
+                    book.setStatus(rs.getBoolean("status"));
+                    book.setCategoryId(rs.getInt("category_id"));
+                    book.setPublisherId(rs.getInt("publisher_id"));
+                    book.setCategoryName(rs.getString("category_name"));
+                    book.setPublisherName(rs.getString("publisher_name"));
+                    book.setCreatedAt(rs.getTimestamp("created_at"));
+                    books.add(book);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return books;
+    }
+
+
 
 }
 

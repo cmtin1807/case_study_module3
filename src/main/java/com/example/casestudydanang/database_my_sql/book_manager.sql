@@ -65,3 +65,9 @@ BEGIN
              join category on book.category_id = category.category_id;
 end //
 DELIMITER ;
+
+SELECT b.*, c.category_name, p.publisher_name
+FROM Book b
+         JOIN Category c ON b.category_id = c.category_id
+         JOIN Publisher p ON b.publisher_id = p.publisher_id
+WHERE c.category_name LIKE 'Ngôn Tình';
