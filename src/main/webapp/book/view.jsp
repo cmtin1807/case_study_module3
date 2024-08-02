@@ -26,7 +26,7 @@
                         <p>${book.description}</p>
                         <p><strong>Category:</strong> ${book.categoryName}</p>
                         <p><strong>Publisher:</strong> ${book.publisherName}</p>
-                        <p><strong>Status:</strong> ${book.status ? 'Available' : 'Not Available'}</p>
+                        <p><strong>Status:</strong> ${book.status ? 'New' : 'Old'}</p>
                         <p><strong>Created At:</strong> ${book.createdAt}</p>
                     </div>
                 </div>

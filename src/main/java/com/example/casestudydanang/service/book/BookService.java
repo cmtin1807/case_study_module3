@@ -26,11 +26,12 @@ public class BookService implements IBookService {
 
     @Override
     public void update(int id, Book object) {
-
+        bookRepository.update(id, object);
     }
 
     @Override
     public void delete(int id) {
+        bookRepository.delete(id);
 
     }
 }

@@ -29,6 +29,17 @@ public class Book {
         this.publisherName = publisherName;
     }
 
+    public Book(int id, String name, String description, String imageUrl, boolean status, String categoryName, String publisherName ) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.imageUrl = imageUrl;
+        this.status = status;
+        this.categoryName = categoryName;
+        this.publisherName = publisherName;
+
+    }
+
     public Book(String name, String description, String imageUrl, boolean status, int categoryId, int publisherId) {
         this.name = name;
         this.description = description;

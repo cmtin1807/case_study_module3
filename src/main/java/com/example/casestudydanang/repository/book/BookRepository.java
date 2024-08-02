@@ -23,6 +23,8 @@ public class BookRepository implements IBookRepository {
             "JOIN Publisher p ON b.publisher_id = p.publisher_id " +
             "WHERE b.book_id = ?";
 
+    private static final String DELETE_BOOK_BY_ID = "DELETE FROM Book WHERE book_id = ?";
+
 
 
 
@@ -122,8 +124,7 @@ public class BookRepository implements IBookRepository {
 
     @Override
     public void delete(int id) {
-        String sql = "DELETE FROM Book WHERE book_id = ?";
-        try (Connection conn = Database.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = Database.getConnection(); PreparedStatement stmt = conn.prepareStatement(DELETE_BOOK_BY_ID)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {

@@ -34,7 +34,7 @@
                 <td><img src="${book.imageUrl}" alt="${book.name}" width="100"></td>
                 <td>${book.categoryName}</td>
                 <td>${book.publisherName}</td>
-                <td>${book.status ? 'New' : 'Used'}</td>
+                <td>${book.status ? 'New' : 'Old'}</td>
                 <td><a href="<c:url value='/books?action=view&id=${book.id}'/>" class="btn btn-primary btn-sm">View</a></td>
                 <td>
                     <a href="<c:url value='/books?action=edit&id=${book.id}'/>" class="btn btn-primary btn-sm">Edit</a>
