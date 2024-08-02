@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface IBookRepository extends IGenerateRepository<Book> {
     List<Book> findByCategoryName (String categoryName);
+    List<Book> findByPublisherName(String publisherName);
 }

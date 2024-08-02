@@ -42,6 +42,10 @@ public class BookService implements IBookService {
         return bookRepository.findByCategoryName(categoryName);
     }
 
+    @Override
+    public List<Book> findByPublisherName(String publisherName) {
 
+return bookRepository.findByPublisherName(publisherName);
+    }
 }
 

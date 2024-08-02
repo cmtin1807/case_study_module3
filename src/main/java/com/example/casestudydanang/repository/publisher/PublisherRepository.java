@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PublisherRepository {
-    public List<Publisher> getAllPublishers() {
+    public List<Publisher> findAll() {
         List<Publisher> publishers = new ArrayList<>();
         String sql = "SELECT * FROM Publisher";
 

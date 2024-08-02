@@ -23,4 +23,12 @@ values ('Giáo Dục Công Dân 8', 'Giáo dục công dân lớp 8',
        ('Hắc Ám Tây Du', 'Tu Tiên hay nhất Thế giới',
         'https://i.pinimg.com/736x/a3/30/6e/a3306e62640b4a4b0133c44761576500.jpg', 0, 2, 2);
 
+-- Thêm người dùng với vai trò admin
+INSERT INTO User (username, password, role) VALUES ('admin', '123', 'admin');
+
+-- Thêm một số người dùng với vai trò customer
+INSERT INTO User (username, password, role) VALUES ('nguyen', '123', 'customer');
+INSERT INTO User (username, password, role) VALUES ('quyet', '456', 'customer');
+INSERT INTO User (username, password, role) VALUES ('alice_johnson', 'password789', 'customer');
+INSERT INTO User (username, password, role) VALUES ('bob_brown', 'password101', 'customer');
 

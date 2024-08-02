@@ -54,6 +54,13 @@ CREATE TABLE borrow_transactions
     FOREIGN KEY (book_id) references  Book(book_id),
     FOREIGN KEY (status_borrow_id) references status_borrow(status_borrow_id)
 );
+CREATE TABLE User (
+                      id INT PRIMARY KEY AUTO_INCREMENT,
+                      username VARCHAR(50) NOT NULL,
+                      password VARCHAR(50) NOT NULL,
+                      role VARCHAR(20) NOT NULL
+);
+
 
 DELIMITER //
 CREATE PROCEDURE show_list(

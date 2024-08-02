@@ -48,6 +48,9 @@ public class BookManagerServlet extends HttpServlet {
             case "searchCategory":
                 showListSearchCategory(request, response);
                 break;
+                case "searchPublisher":
+                    showListSearchPublisher(request,response);
+                    break;
 
             default:
                 showListBook(request, response);
@@ -55,11 +58,26 @@ public class BookManagerServlet extends HttpServlet {
         }
     }
 
+    private void showListSearchPublisher(HttpServletRequest request, HttpServletResponse response) {
+        List<Category> categories = categoryService.findAll();
+        List<Publisher> publishers = publisherService.findAll();
+
+        request.setAttribute("categories", categories);
+        request.setAttribute("publishers", publishers);
+
+        String searchPublisherName = request.getParameter("searchPublisherName");
+        List<Book> books = bookService.findByPublisherName(searchPublisherName);
+        if (books == null ) {
+            books = bookService.findAll();
+        }
+
+        handlePagination(request, response, books, "book/list.jsp");
+    }
 
 
     private void showListSearchCategory(HttpServletRequest request, HttpServletResponse response) {
-        List<Category> categories = categoryService.getAllCategories();
-        List<Publisher> publishers = publisherService.getAllPublishers();
+        List<Category> categories = categoryService.findAll();
+        List<Publisher> publishers = publisherService.findAll();
 
         request.setAttribute("categories", categories);
         request.setAttribute("publishers", publishers);
@@ -67,7 +85,7 @@ public class BookManagerServlet extends HttpServlet {
         String searchCategoryName = request.getParameter("searchCategoryName");
         List<Book> books = bookService.findByCategoryName(searchCategoryName);
 
-        if (books == null || books.isEmpty()) {
+        if (books == null) {
             books = bookService.findAll();
         }
 
@@ -150,8 +168,8 @@ public class BookManagerServlet extends HttpServlet {
         CategoryService categoryService = new CategoryService();
         PublisherService publisherService = new PublisherService();
 
-        List<Category> categories = categoryService.getAllCategories();
-        List<Publisher> publishers = publisherService.getAllPublishers();
+        List<Category> categories = categoryService.findAll();
+        List<Publisher> publishers = publisherService.findAll();
         int id = Integer.parseInt(request.getParameter("id"));
         Book book = this.bookService.findById(id);
         RequestDispatcher dispatcher;
@@ -178,8 +196,8 @@ public class BookManagerServlet extends HttpServlet {
         CategoryService categoryService = new CategoryService();
         PublisherService publisherService = new PublisherService();
 
-        List<Category> categories = categoryService.getAllCategories();
-        List<Publisher> publishers = publisherService.getAllPublishers();
+        List<Category> categories = categoryService.findAll();
+        List<Publisher> publishers = publisherService.findAll();
 
         request.setAttribute("categories", categories);
         request.setAttribute("publishers", publishers);
@@ -196,8 +214,8 @@ public class BookManagerServlet extends HttpServlet {
     private void showListBook(HttpServletRequest request, HttpServletResponse response) {
         CategoryService categoryService = new CategoryService();
         PublisherService publisherService = new PublisherService();
-        List<Category> categories = categoryService.getAllCategories();
-        List<Publisher> publishers = publisherService.getAllPublishers();
+        List<Category> categories = categoryService.findAll();
+        List<Publisher> publishers = publisherService.findAll();
         request.setAttribute("categories", categories);
         request.setAttribute("publishers", publishers);
         List<Book> books = bookService.findAll();
