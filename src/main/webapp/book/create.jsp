@@ -11,7 +11,7 @@
 <body>
 <div class="container mt-5">
     <h1 class="mb-4">Create a New Book</h1>
-    <form action="<c:url value='/books'/>" method="post">
+    <form action="<c:url value='/books?action=create'/>" method="post">
         <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" class="form-control" id="name" name="name" required>
@@ -22,7 +22,7 @@
         </div>
         <div class="form-group">
             <label for="image_url">Image URL:</label>
-            <input type="text" class="form-control" id="image_url" name="image_url" required>
+            <input type="url" class="form-control" id="image_url" name="image_url" required>
         </div>
         <div class="form-group">
             <label for="status">Status:</label>
@@ -50,6 +50,9 @@
         <button type="submit" class="btn btn-primary">Create</button>
         <a href="<c:url value='/books'/>" class="btn btn-secondary">Cancel</a>
     </form>
+    <c:if test="${not empty message}">
+        <div class="alert alert-info mt-3">${message}</div>
+    </c:if>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>

@@ -48,25 +48,42 @@ public class BookManagerServlet extends HttpServlet {
     }
 
     private void showFormView(HttpServletRequest request, HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Book book = this.bookService.findById(id);
+        RequestDispatcher dispatcher;
+        if (book == null) {
+            dispatcher = request.getRequestDispatcher("errorPage.jsp");
+        } else {
+            request.setAttribute("book", book);
+            dispatcher = request.getRequestDispatcher("book/view.jsp");
+        }
         try {
-            int id = Integer.parseInt(request.getParameter("book_id"));
-            Book book = bookService.findById(id);
-            if (book != null) {
-                request.setAttribute("book", book);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("list/view.jsp");
-                requestDispatcher.forward(request, response);
-            } else {
-                response.sendRedirect("errorPage.jsp");
-            }
-        } catch (NumberFormatException | ServletException | IOException e) {
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
             e.printStackTrace();
-            throw new RuntimeException(e);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
 
     private void showFormDelete(HttpServletRequest request, HttpServletResponse response) {
-
+        int id = Integer.parseInt(request.getParameter("id"));
+        Book book = this.bookService.findById(id);
+        RequestDispatcher dispatcher;
+        if (book == null) {
+            dispatcher = request.getRequestDispatcher("errorPage.jsp");
+        } else {
+            request.setAttribute("book", book);
+            dispatcher = request.getRequestDispatcher("book/delete.jsp");
+        }
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void showFormUpdate(HttpServletRequest request, HttpServletResponse response) {
@@ -107,6 +124,33 @@ public class BookManagerServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+        if (action == null) {
+            action = "";
+        }
+        switch (action) {
+            case "create":
+                createBook(request, response);
+                break;
+            case "update":
+                updateBook(request,response);
+                break;
+            case "delete":
+                deleteBook(request,response);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void deleteBook(HttpServletRequest request, HttpServletResponse response) {
+    }
+
+    private void updateBook(HttpServletRequest request, HttpServletResponse response) {
+        
+    }
+
+    private void createBook(HttpServletRequest request, HttpServletResponse response) {
         String name = request.getParameter("name");
         String description = request.getParameter("description");
         String imageUrl = request.getParameter("image_url");
@@ -116,8 +160,20 @@ public class BookManagerServlet extends HttpServlet {
 
         Book book = new Book(name, description, imageUrl, status, categoryId, publisherId);
 
-        bookService.save(book);
-        response.sendRedirect("books");
+        try {
+            bookService.save(book);
+            request.setAttribute("message", "Book created successfully!");
+        } catch (Exception e) {
+            request.setAttribute("message", "Error creating book: " + e.getMessage());
+        }
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("book/create.jsp");
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException | IOException e) {
+            e.printStackTrace();
+        }
     }
+
 }
 
