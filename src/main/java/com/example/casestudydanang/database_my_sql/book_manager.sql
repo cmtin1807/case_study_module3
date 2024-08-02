@@ -49,7 +49,10 @@ CREATE TABLE borrow_transactions
     book_id                INT,
     borrow_date            DATE NOT NULL,
     return_date            DATE,
-    status                 ENUM ('borrow','over','return')
+    status_borrow_id        INT,
+    FOREIGN KEY (customer_id) references Customers(customer_id),
+    FOREIGN KEY (book_id) references  Book(book_id),
+    FOREIGN KEY (status_borrow_id) references status_borrow(status_borrow_id)
 );
 
 DELIMITER //
