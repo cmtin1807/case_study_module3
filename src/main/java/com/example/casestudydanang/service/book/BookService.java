@@ -4,6 +4,7 @@ package com.example.casestudydanang.service.book;
 import com.example.casestudydanang.model.Book;
 import com.example.casestudydanang.repository.book.BookRepository;
 
+import java.util.Collections;
 import java.util.List;
 
 public class BookService implements IBookService {
@@ -29,10 +30,18 @@ public class BookService implements IBookService {
         bookRepository.update(id, object);
     }
 
+
     @Override
     public void delete(int id) {
         bookRepository.delete(id);
 
     }
+
+    @Override
+    public List<Book> findByCategoryName(String categoryName) {
+        return bookRepository.findByCategoryName(categoryName);
+    }
+
+
 }
 
