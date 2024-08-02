@@ -34,7 +34,7 @@ public class BookManagerServlet extends HttpServlet {
             case "create":
                 showFormCreate(request, response);
                 break;
-            case "update":
+            case "edit":
                 showFormUpdate(request, response);
                 break;
             case "delete":
@@ -87,6 +87,31 @@ public class BookManagerServlet extends HttpServlet {
     }
 
     private void showFormUpdate(HttpServletRequest request, HttpServletResponse response) {
+        CategoryService categoryService = new CategoryService();
+        PublisherService publisherService = new PublisherService();
+
+        List<Category> categories = categoryService.getAllCategories();
+        List<Publisher> publishers = publisherService.getAllPublishers();
+        int id = Integer.parseInt(request.getParameter("id"));
+        Book book = this.bookService.findById(id);
+        RequestDispatcher dispatcher;
+        if (book == null) {
+            dispatcher = request.getRequestDispatcher("errorPage.jsp");
+        }
+        else {
+            request.setAttribute("categories", categories);
+            request.setAttribute("publishers", publishers);
+            request.setAttribute("book", book);
+            dispatcher = request.getRequestDispatcher("book/update.jsp");
+        }
+        try {
+            dispatcher.forward(request,response);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
 
     }
 
@@ -132,7 +157,7 @@ public class BookManagerServlet extends HttpServlet {
             case "create":
                 createBook(request, response);
                 break;
-            case "update":
+            case "edit":
                 updateBook(request,response);
                 break;
             case "delete":
@@ -144,11 +169,44 @@ public class BookManagerServlet extends HttpServlet {
     }
 
     private void deleteBook(HttpServletRequest request, HttpServletResponse response) {
-    }
+            int id = Integer.parseInt(request.getParameter("id"));
+            bookService.delete(id);
+            try {
+                response.sendRedirect("books");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
 
     private void updateBook(HttpServletRequest request, HttpServletResponse response) {
-        
+        try {
+            int id = Integer.parseInt(request.getParameter("id"));
+            String name = request.getParameter("name");
+            String description = request.getParameter("description");
+            String imageUrl = request.getParameter("image_url");
+            boolean status = Boolean.parseBoolean(request.getParameter("status"));
+            int categoryId = Integer.parseInt(request.getParameter("category_id"));
+            int publisherId = Integer.parseInt(request.getParameter("publisher_id"));
+
+            Book book = new Book( name, description, imageUrl, status, categoryId, publisherId);
+
+            bookService.update(id, book);
+            response.sendRedirect("books");
+        } catch (NumberFormatException e) {
+            request.setAttribute("message", "Invalid or missing parameters.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("errorPage.jsp");
+            try {
+                dispatcher.forward(request, response);
+            } catch (ServletException | IOException ex) {
+                ex.printStackTrace();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
+
+
 
     private void createBook(HttpServletRequest request, HttpServletResponse response) {
         String name = request.getParameter("name");
