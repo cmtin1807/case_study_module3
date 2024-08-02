@@ -75,25 +75,26 @@ public class BookRepository implements IBookRepository {
 
     @Override
     public Book findById(int id) {
-
         Book book = null;
-        try(
-            Connection connection = Database.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SHOW_BOOK_BY_ID);) {
+        try (
+                Connection connection = Database.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(SHOW_BOOK_BY_ID);
+        ) {
             preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                book = new Book();
-                book.setId(resultSet.getInt("book_id"));
-                book.setName(resultSet.getString("name"));
-                book.setDescription(resultSet.getString("description"));
-                book.setImageUrl(resultSet.getString("image_url"));
-                book.setStatus(resultSet.getBoolean("status"));
-                book.setCategoryId(resultSet.getInt("category_id"));
-                book.setPublisherId(resultSet.getInt("publisher_id"));
-                book.setCategoryName(resultSet.getString("category_name"));
-                book.setPublisherName(resultSet.getString("publisher_name"));
-                book.setCreatedAt(resultSet.getTimestamp("created_at"));
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    book = new Book();
+                    book.setId(resultSet.getInt("book_id"));
+                    book.setName(resultSet.getString("name"));
+                    book.setDescription(resultSet.getString("description"));
+                    book.setImageUrl(resultSet.getString("image_url"));
+                    book.setStatus(resultSet.getBoolean("status"));
+                    book.setCategoryId(resultSet.getInt("category_id"));
+                    book.setPublisherId(resultSet.getInt("publisher_id"));
+                    book.setCategoryName(resultSet.getString("category_name"));
+                    book.setPublisherName(resultSet.getString("publisher_name"));
+                    book.setCreatedAt(resultSet.getTimestamp("created_at"));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -101,14 +102,34 @@ public class BookRepository implements IBookRepository {
         return book;
     }
 
+
     @Override
     public void update(int id, Book book) {
-
+        String sql = "UPDATE Book SET name = ?, description = ?, image_url = ?, status = ?, category_id = ?, publisher_id = ? WHERE book_id = ?";
+        try (Connection conn = Database.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, book.getName());
+            stmt.setString(2, book.getDescription());
+            stmt.setString(3, book.getImageUrl());
+            stmt.setBoolean(4, book.isStatus());
+            stmt.setInt(5, book.getCategoryId());
+            stmt.setInt(6, book.getPublisherId());
+            stmt.setInt(7, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void delete(int id) {
-
+        String sql = "DELETE FROM Book WHERE book_id = ?";
+        try (Connection conn = Database.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
+
 }
 
