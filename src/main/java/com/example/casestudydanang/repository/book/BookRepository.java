@@ -1,6 +1,5 @@
 package com.example.casestudydanang.repository.book;
 
-// BookDAO.java
 
 
 import com.example.casestudydanang.model.Book;
@@ -8,7 +7,6 @@ import com.example.casestudydanang.util.Database;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class BookRepository implements IBookRepository {
@@ -42,7 +40,6 @@ public class BookRepository implements IBookRepository {
 
     public List<Book> findAll() {
         List<Book> books = new ArrayList<>();
-
 
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(SHOW_ALL_LIST_BOOKS);

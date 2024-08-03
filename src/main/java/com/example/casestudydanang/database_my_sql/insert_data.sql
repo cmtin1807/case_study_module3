@@ -1,5 +1,5 @@
 USE book_manager;
-
+SELECT * FROM Category;
 INSERT INTO category(category_name)
 values ('Ngôn Tình');
 INSERT INTO category(category_name)
