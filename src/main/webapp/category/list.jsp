@@ -5,8 +5,13 @@
 <head>
     <title>Category List</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <%@ include file="css/styles.css" %>
 </head>
 <body>
+<%@ include file="css/header.jsp" %>
+<%@ include file="css/nav.jsp" %>
+<div id="container">
+    <%@ include file="css/sidebar.jsp" %>
 <div class="container mt-5">
     <h1 class="mb-4">Category List</h1>
     <a href="categories?action=create" class="btn btn-success mb-3">Add New Category</a>
@@ -33,6 +38,8 @@
         </tbody>
     </table>
 </div>
+</div>
+<%@ include file="css/footer.jsp" %>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
