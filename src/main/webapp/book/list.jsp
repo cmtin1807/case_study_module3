@@ -10,20 +10,41 @@
 </head>
 <body>
 <div class="container mt-5">
-    <h1 class="mb-4">Book List</h1>
-    <form method="get" action="books">
-        <input type="hidden" name="action" value="searchCategory">
-        <div class="form-group">
-            <label for="searchCategoryName">Search by Category:</label>
-            <select name="searchCategoryName" id="searchCategoryName" class="form-control">
-                <option value="">Select a category</option>
-                <c:forEach var="category" items="${categories}">
-                    <option value="${category.name}">${category.name}</option>
-                </c:forEach>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Search</button>
-    </form>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Book List</h1>
+    </div>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1></h1>
+        <form method="get" action="books" class="form-inline">
+            <input type="hidden" name="action" value="searchCategory">
+            <div class="form-group mb-2">
+                <label for="searchCategoryName" class="sr-only">Search by Category:</label>
+                <select name="searchCategoryName" id="searchCategoryName" class="form-control form-control-sm">
+                    <option value="">Select a category</option>
+                    <c:forEach var="category" items="${categories}">
+                        <option value="${category.name}">${category.name}</option>
+                    </c:forEach>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm mb-2 ml-2">Search</button>
+        </form>
+    </div>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1></h1>
+        <form method="get" action="books" class="form-inline">
+            <input type="hidden" name="action" value="searchPublisher">
+            <div class="form-group mb-2">
+                <label for="searchPublisherName" class="sr-only">Search by Publisher:</label>
+                <select name="searchPublisherName" id="searchPublisherName" class="form-control form-control-sm">
+                    <option value="">Select a publisher</option>
+                    <c:forEach var="publisher" items="${publishers}">
+                        <option value="${publisher.name}">${publisher.name}</option>
+                    </c:forEach>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm mb-2 ml-2">Search</button>
+        </form>
+    </div>
 
     <table class="table table-striped">
         <thead class="thead-dark">

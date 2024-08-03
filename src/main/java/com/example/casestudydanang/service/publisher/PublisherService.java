@@ -6,9 +6,9 @@ import com.example.casestudydanang.repository.publisher.PublisherRepository;
 import java.util.List;
 
 public class PublisherService {
-    private PublisherRepository publisherDAO = new PublisherRepository();
+    private PublisherRepository publisherRepository = new PublisherRepository();
 
-    public List<Publisher> getAllPublishers() {
-        return publisherDAO.getAllPublishers();
+    public List<Publisher> findAll() {
+        return publisherRepository.findAll();
     }
 }

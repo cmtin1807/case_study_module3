@@ -1,6 +1,5 @@
 package com.example.casestudydanang.repository.book;
 
-// BookDAO.java
 
 
 import com.example.casestudydanang.model.Book;
@@ -8,7 +7,6 @@ import com.example.casestudydanang.util.Database;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class BookRepository implements IBookRepository {
@@ -33,14 +31,15 @@ public class BookRepository implements IBookRepository {
             "JOIN Category c ON b.category_id = c.category_id " +
             "JOIN Publisher p ON b.publisher_id = p.publisher_id " +
             "WHERE c.category_name LIKE ?";
-
-
+    private static final String SEARCH_PUBLISHER = "SELECT b.*, c.category_name, p.publisher_name " +
+            "FROM Book b " +
+            "JOIN Category c ON b.category_id = c.category_id " +
+            "JOIN Publisher p ON b.publisher_id = p.publisher_id " +
+            "WHERE p.publisher_name LIKE ?";
 
 
     public List<Book> findAll() {
         List<Book> books = new ArrayList<>();
-
-
 
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(SHOW_ALL_LIST_BOOKS);
@@ -65,7 +64,6 @@ public class BookRepository implements IBookRepository {
         }
         return books;
     }
-
 
 
     public void save(Book book) {
@@ -165,9 +163,34 @@ public class BookRepository implements IBookRepository {
             e.printStackTrace();
         }
         return books;
+
     }
 
-
-
+    @Override
+    public List<Book> findByPublisherName(String publisherName) {
+        List<Book> books = new ArrayList<>();
+        try (Connection conn = Database.getConnection();
+             PreparedStatement preparedStatement = conn.prepareStatement(SEARCH_PUBLISHER)) {
+            preparedStatement.setString(1, "%" + publisherName + "%"); // Sử dụng '%' cho pattern matching
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                while (rs.next()) {
+                    Book book = new Book();
+                    book.setId(rs.getInt("book_id"));
+                    book.setName(rs.getString("name"));
+                    book.setDescription(rs.getString("description"));
+                    book.setImageUrl(rs.getString("image_url"));
+                    book.setStatus(rs.getBoolean("status"));
+                    book.setCategoryId(rs.getInt("category_id"));
+                    book.setPublisherId(rs.getInt("publisher_id"));
+                    book.setCategoryName(rs.getString("category_name"));
+                    book.setPublisherName(rs.getString("publisher_name"));
+                    book.setCreatedAt(rs.getTimestamp("created_at"));
+                    books.add(book);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return books;
+    }
 }
-
