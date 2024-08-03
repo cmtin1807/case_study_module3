@@ -32,5 +32,8 @@ public class CategoryService implements ICategoryService {
     public void delete(int id) {
         categoryRepository.delete(id);
     }
+    public boolean isDelete(int id) {
+        return categoryRepository.isDelete(id);
+    }
 
 }

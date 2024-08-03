@@ -3,10 +3,7 @@ package com.example.casestudydanang.repository.category;
 import com.example.casestudydanang.model.Category;
 import com.example.casestudydanang.util.Database;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,5 +83,18 @@ public class CategoryRepository implements ICategoryRepository {
             e.printStackTrace();
         }
         return category;
+    }
+
+    public boolean isDelete(int id) {
+        String sql = "{CALL deleteCategory(?)}";
+        try (Connection connection = Database.getConnection();
+             CallableStatement statement = connection.prepareCall(sql)) {
+            statement.setInt(1, id);
+            int rowsAffected = statement.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

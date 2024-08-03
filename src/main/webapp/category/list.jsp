@@ -14,6 +14,11 @@
     <%@ include file="css/sidebar.jsp" %>
 <div class="container mt-5">
     <h1 class="mb-4">Category List</h1>
+    <c:if test="${not empty messageCategory}">
+        <div class="alert alert-info mt-3">
+                ${messageCategory}
+        </div>
+    </c:if>
     <a href="categories?action=create" class="btn btn-success mb-3">Add New Category</a>
     <table class="table table-bordered">
         <thead class="thead-dark">
