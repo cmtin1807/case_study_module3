@@ -65,3 +65,7 @@ BEGIN
              join category on book.category_id = category.category_id;
 end //
 DELIMITER ;
+select customer_id, customer_name, customer_code, customer_class, customer_address,customer_birthday, customer_is_active from customers;
+ALTER TABLE Customers ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+SELECT customer_id, customer_name, customer_code,
+            customer_class, customer_address, customer_birthday, customer_is_active FROM customers WHERE is_deleted = FALSE;
