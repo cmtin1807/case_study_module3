@@ -6,5 +6,7 @@ import com.example.casestudydanang.service.IGenerateService;
 import java.util.List;
 
 public interface IBookService extends IGenerateService<Book> {
+    List<Book> findByCategoryName (String categoryName);
+    List<Book> findByPublisherName(String publisherName);
 
 }

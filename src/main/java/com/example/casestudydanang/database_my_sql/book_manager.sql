@@ -54,6 +54,14 @@ CREATE TABLE borrow_transactions
     FOREIGN KEY (book_id) references  Book(book_id),
     FOREIGN KEY (status_borrow_id) references status_borrow(status_borrow_id)
 );
+CREATE TABLE User (
+                      id INT PRIMARY KEY AUTO_INCREMENT,
+                      username VARCHAR(50) NOT NULL,
+                      password VARCHAR(50) NOT NULL,
+                      role VARCHAR(20) NOT NULL
+);
+
+
 
 DELIMITER //
 CREATE PROCEDURE show_list(
@@ -83,4 +91,21 @@ join borrow_transactions  on Customers.customer_id = borrow_transactions.custome
 join Book on borrow_transactions.book_id = Book.book_id
 join status_borrow on borrow_transactions.status_borrow_id = status_borrow.status_borrow_id
 where Customers.is_deleted = false;
+
+=======
+
+SELECT b.*, c.category_name, p.publisher_name
+FROM Book b
+         JOIN Category c ON b.category_id = c.category_id
+         JOIN Publisher p ON b.publisher_id = p.publisher_id
+WHERE c.category_name LIKE 'Ngôn Tình';
+
+DELIMITER //
+
+CREATE PROCEDURE deleteCategory(IN categoryId INT)
+BEGIN
+    DELETE FROM Category WHERE category_id = categoryId;
+END //
+
+DELIMITER ;
 

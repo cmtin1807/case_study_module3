@@ -7,11 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Create Book</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <%@ include file="css/styles.css" %>
 </head>
 <body>
-<div class="container mt-5">
-    <h1 class="mb-4">Create a New Book</h1>
-    <form action="<c:url value='/books'/>" method="post">
+<%@ include file="css/header.jsp" %>
+<%@ include file="css/nav.jsp" %>
+<div id="container">
+    <%@ include file="css/sidebar.jsp" %>
+    <div class="container mt-5">
+        <h1 class="mb-4">Create a New Book</h1>
+        <form action="<c:url value='/books?action=create'/>" method="post">
         <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" class="form-control" id="name" name="name" required>
@@ -22,7 +27,7 @@
         </div>
         <div class="form-group">
             <label for="image_url">Image URL:</label>
-            <input type="text" class="form-control" id="image_url" name="image_url" required>
+            <input type="url" class="form-control" id="image_url" name="image_url" required>
         </div>
         <div class="form-group">
             <label for="status">Status:</label>
@@ -50,7 +55,12 @@
         <button type="submit" class="btn btn-primary">Create</button>
         <a href="<c:url value='/books'/>" class="btn btn-secondary">Cancel</a>
     </form>
+    <c:if test="${not empty message}">
+        <div class="alert alert-info mt-3">${message}</div>
+    </c:if>
+    </div>
 </div>
+<%@ include file="css/footer.jsp" %>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
