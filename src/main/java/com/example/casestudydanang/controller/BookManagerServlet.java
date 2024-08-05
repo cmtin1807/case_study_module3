@@ -167,7 +167,6 @@ public class BookManagerServlet extends HttpServlet {
     private void showFormUpdate(HttpServletRequest request, HttpServletResponse response) {
         CategoryService categoryService = new CategoryService();
         PublisherService publisherService = new PublisherService();
-
         List<Category> categories = categoryService.findAll();
         List<Publisher> publishers = publisherService.findAll();
         int id = Integer.parseInt(request.getParameter("id"));
@@ -247,17 +246,25 @@ public class BookManagerServlet extends HttpServlet {
 
     private void deleteBook(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
-        bookService.delete(id);
-        try {
-            response.sendRedirect("books");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        Book book = bookService.findById(id);
+        String message;
+        if (book == null) {
+            message = "Sách không tồn tại";
+        } else {
+            message = "Đã xóa thành công sách";
+            bookService.delete(id);
         }
+        request.setAttribute("message", message);
+
+        showListBook(request,response);
+
+
+
     }
 
 
+
     private void updateBook(HttpServletRequest request, HttpServletResponse response) {
-        try {
             int id = Integer.parseInt(request.getParameter("id"));
             String name = request.getParameter("name");
             String description = request.getParameter("description");
@@ -265,23 +272,13 @@ public class BookManagerServlet extends HttpServlet {
             boolean status = Boolean.parseBoolean(request.getParameter("status"));
             int categoryId = Integer.parseInt(request.getParameter("category_id"));
             int publisherId = Integer.parseInt(request.getParameter("publisher_id"));
-
             Book book = new Book(name, description, imageUrl, status, categoryId, publisherId);
-
             bookService.update(id, book);
-            response.sendRedirect("books");
-        } catch (NumberFormatException e) {
-            request.setAttribute("message", "Invalid or missing parameters.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("errorPage.jsp");
-            try {
-                dispatcher.forward(request, response);
-            } catch (ServletException | IOException ex) {
-                ex.printStackTrace();
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            String message = "Cập nhật thành công";
+            request.setAttribute("message", message);
+            showListBook(request,response);
+
         }
-    }
 
 
     private void createBook(HttpServletRequest request, HttpServletResponse response) {

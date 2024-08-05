@@ -48,6 +48,7 @@ public class CategoryManagerServlet extends HttpServlet {
         request.setAttribute("category", category);
         RequestDispatcher dispatcher = request.getRequestDispatcher("category/view.jsp");
         dispatcher.forward(request, response);
+
     }
 
     private void showFormDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -71,11 +72,17 @@ public class CategoryManagerServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    private void showListCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void showListCategory(HttpServletRequest request, HttpServletResponse response)  {
         List<Category> categories = categoryService.findAll();
         request.setAttribute("categories", categories);
         RequestDispatcher dispatcher = request.getRequestDispatcher("category/list.jsp");
-        dispatcher.forward(request, response);
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -102,11 +109,25 @@ public class CategoryManagerServlet extends HttpServlet {
 
     private void deleteCategory(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        categoryService.delete(id);
-        response.sendRedirect("categories");
+        Category category = categoryService.findById(id);
+
+        String messageCategory;
+        if (category != null) {
+            boolean isDeleted = categoryService.isDelete(id);
+            if (isDeleted) {
+                messageCategory = "Category deleted successfully.";
+            } else {
+                messageCategory = "Failed to delete category.";
+            }
+        } else {
+            messageCategory ="Category not found.";
+        }
+
+        request.getSession().setAttribute("messageCategory", messageCategory);
+        response.sendRedirect("/categories");
     }
 
-    private void updateCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void updateCategory(HttpServletRequest request, HttpServletResponse response)  {
         int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
 
@@ -117,17 +138,28 @@ public class CategoryManagerServlet extends HttpServlet {
             category.setName(name);
             request.setAttribute("category", category);
             RequestDispatcher dispatcher = request.getRequestDispatcher("category/update.jsp");
-            dispatcher.forward(request, response);
+            try {
+                dispatcher.forward(request, response);
+            } catch (ServletException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             return;
         }
 
         Category category = new Category();
         category.setId(id);
         category.setName(name);
-
         categoryService.update(id, category);
+         String   messageCategory = "Category updated successfully.";
+            request.getSession().setAttribute("messageCategory", messageCategory);
+        try {
+            response.sendRedirect("categories");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
-        response.sendRedirect("categories");
     }
 
     private void createCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -141,8 +173,9 @@ public class CategoryManagerServlet extends HttpServlet {
 
         Category category = new Category();
         category.setName(name);
-
         categoryService.save(category);
+        String messageCategory = "Category created successfully.";
+        request.getSession().setAttribute("messageCategory", messageCategory);
 
         response.sendRedirect("categories");
     }

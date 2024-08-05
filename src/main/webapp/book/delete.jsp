@@ -13,26 +13,36 @@
     <meta charset="UTF-8">
     <title>Delete Book</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <%@ include file="css/styles.css" %>
 </head>
 <body>
-<div class="container">
-    <h1 class="mt-5">Delete Book</h1>
-    <div class="alert alert-danger">
-        <h4 class="alert-heading">Are you sure you want to delete this book?</h4>
-        <p><strong>Name:</strong> ${book.name}</p>
-        <p><strong>Description:</strong> ${book.description}</p>
-        <p><strong>Image:</strong> <img src="${book.imageUrl}" alt="${book.name}" style="width: 150px; height: 150px;"></p>
-        <p><strong>Status:</strong> ${book.status ? "Available" : "Not Available"}</p>
-        <p><strong>Category:</strong> ${book.categoryName}</p>
-        <p><strong>Publisher:</strong> ${book.publisherName}</p>
+<%@ include file="css/header.jsp" %>
+<%@ include file="css/nav.jsp" %>
+<div id="container">
+    <%@ include file="css/sidebar.jsp" %>
+    <div class="container">
+        <h1 class="mt-5">Delete Book</h1>
+        <div class="alert alert-danger">
+            <h4 class="alert-heading">Are you sure you want to delete this book?</h4>
+            <p><strong>Name:</strong> ${book.name}</p>
+            <p><strong>Description:</strong> ${book.description}</p>
+            <p><strong>Image:</strong> <img src="${book.imageUrl}" alt="${book.name}"
+                                            style="width: 150px; height: 150px;"></p>
+            <p><strong>Status:</strong> ${book.status ? "Available" : "Not Available"}</p>
+            <p><strong>Category:</strong> ${book.categoryName}</p>
+            <p><strong>Publisher:</strong> ${book.publisherName}</p>
+        </div>
+        <form action="books" method="post">
+            <input type="hidden" name="action" value="delete">
+            <input type="hidden" name="id" value="${book.id}">
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a href="books" class="btn btn-secondary">Cancel</a>
+        </form>
     </div>
-    <form action="books" method="post">
-        <input type="hidden" name="action" value="delete">
-        <input type="hidden" name="id" value="${book.id}">
-        <button type="submit" class="btn btn-danger">Delete</button>
-        <a href="books" class="btn btn-secondary">Cancel</a>
-    </form>
 </div>
+</div>
+
+<%@ include file="css/footer.jsp" %>
 </body>
 </html>
 
