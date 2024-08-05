@@ -73,6 +73,26 @@ BEGIN
              join category on book.category_id = category.category_id;
 end //
 DELIMITER ;
+select customer_id, customer_name, customer_code, customer_class, customer_address,customer_birthday, customer_is_active from customers;
+ALTER TABLE Customers ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+SELECT customer_id, customer_name, customer_code,
+            customer_class, customer_address, customer_birthday, customer_is_active FROM customers WHERE is_deleted = FALSE;
+select borrow_transactions_id,customer_name, customer_code, customer_class, customer_birthday, name, image_url, status, category_name, publisher_name, borrow_date, return_date, status_borrow_type from customers
+    join borrow_transactions on customers.customer_id = borrow_transactions.customer_id
+join status_borrow on borrow_transactions.status_borrow_id = status_borrow.status_borrow_id
+join Book on borrow_transactions.book_id = Book.book_id
+join category on Book.category_id = category.category_id
+join publisher on Book.publisher_id = publisher.publisher_id
+WHERE Customers.is_deleted = false;
+use book_manager;
+create database demo;
+select borrow_transactions_id, customer_name, customer_code, name, status_borrow_type from Customers
+join borrow_transactions  on Customers.customer_id = borrow_transactions.customer_id
+join Book on borrow_transactions.book_id = Book.book_id
+join status_borrow on borrow_transactions.status_borrow_id = status_borrow.status_borrow_id
+where Customers.is_deleted = false;
+
+=======
 
 SELECT b.*, c.category_name, p.publisher_name
 FROM Book b
@@ -88,3 +108,4 @@ BEGIN
 END //
 
 DELIMITER ;
+

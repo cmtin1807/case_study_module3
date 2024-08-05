@@ -23,6 +23,14 @@ values ('Giáo Dục Công Dân 8', 'Giáo dục công dân lớp 8',
        ('Hắc Ám Tây Du', 'Tu Tiên hay nhất Thế giới',
         'https://i.pinimg.com/736x/a3/30/6e/a3306e62640b4a4b0133c44761576500.jpg', 0, 2, 2);
 
+insert into customers(customer_name, customer_code, customer_class, customer_address, customer_birthday, customer_is_active)
+values ('Quyet','q001','C0224','Quang ngai','1994-2-26',true),
+       ('Nguyen','N001','C0224','Quang Nam','1997-2-26',false),
+       ('Nam','q001','C0224','Quang ngai','1994-2-26',false),
+       ('Phuong','q001','C555','Ha Noi','1994-2-26',true);
+insert into status_borrow(status_borrow_type) values ('On loan');
+insert into status_borrow(status_borrow_type) values ('Overdue');
+insert into status_borrow(status_borrow_type) values ('Repaid');
 
 INSERT INTO User (username, password, role) VALUES ('admin', '123', 'admin');
 
