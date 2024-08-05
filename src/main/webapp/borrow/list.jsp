@@ -1,53 +1,35 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: dell
-  Date: 8/3/2024
-  Time: 12:36 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Borrow Transactions</title>
+    <title>List of Borrow Transactions</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container mt-5">
-    <h1 class="mb-4">Borrow Transactions</h1>
-    <a href="<c:url value='/borrows?action=create' />" class="btn btn-primary mb-3">Add New</a>
-    <table class="table">
+<div class="container">
+    <h2 class="mt-5">List of Borrow Transactions</h2>
+    <table class="table table-bordered mt-3">
         <thead>
         <tr>
             <th>ID</th>
-            <th>Customer ID</th>
-            <th>Book ID</th>
-            <th>Borrow Date</th>
-            <th>Return Date</th>
-            <th>Actions</th>
+            <th>Customer Name</th>
+            <th>Customer Code</th>
+            <th>Book Name</th>
+            <th>Status</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="transaction" items="${transactions}">
+        <c:forEach var="borrow" items="${borrows}">
             <tr>
-                <td>${transaction.id}</td>
-                <td>${transaction.customerId}</td>
-                <td>${transaction.bookId}</td>
-                <td>${transaction.borrowDate}</td>
-                <td>${transaction.returnDate != null ? transaction.returnDate : "Not Returned"}</td>
-                <td>
-                    <a href="<c:url value='/borrows?action=edit&id=${transaction.id}' />" class="btn btn-warning btn-sm">Edit</a>
-                </td>
+                <td>${borrow.id}</td>
+                <td>${borrow.nameCustomer}</td>
+                <td>${borrow.codeCustomer}</td>
+                <td>${borrow.nameBook}</td>
+                <td>${borrow.statusBorrowType}</td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
 </div>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-

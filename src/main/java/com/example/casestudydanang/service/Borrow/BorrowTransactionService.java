@@ -1,26 +1,38 @@
 package com.example.casestudydanang.service.Borrow;
 
-import com.example.casestudydanang.model.BorrowTransaction;
+import com.example.casestudydanang.model.BorrowDTO.BorrowTransactionDTO;
 import com.example.casestudydanang.repository.borrowing.BorrowTransactionRepository;
 
 import java.util.List;
 
-public class BorrowTransactionService {
-    private BorrowTransactionRepository borrowRepository = new BorrowTransactionRepository();
+public class BorrowTransactionService implements IBorrowTransactionService {
+    private BorrowTransactionRepository repository = new BorrowTransactionRepository();
 
-
-    public void save(BorrowTransaction transaction) {
-        borrowRepository.save(transaction);
+    @Override
+    public List<BorrowTransactionDTO> findAll() {
+        return repository.findAll();
+    }
+    public List<BorrowTransactionDTO> findBasicBorrow() {
+        return repository.findBasicBorrow();
     }
 
-    public List<BorrowTransaction> findAll() {
-        return BorrowTransactionRepository.findAll();
+    @Override
+    public BorrowTransactionDTO findById(int id) {
+        return repository.findById(id);
     }
 
-    public BorrowTransaction findById(int id) {
-        return BorrowTransactionRepository.findById(id);
+    @Override
+    public void delete(int id) {
+        repository.delete(id);
     }
 
-    public void update(BorrowTransaction transaction) {
+    @Override
+    public void update(int id, BorrowTransactionDTO object) {
+        repository.update(id, object);
+    }
+
+    @Override
+    public void save(BorrowTransactionDTO object) {
+        repository.save(object);
     }
 }
