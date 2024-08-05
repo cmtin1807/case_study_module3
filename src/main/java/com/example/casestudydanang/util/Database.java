@@ -8,7 +8,7 @@ public class Database {
     // Database.java
     private static String jdbcURL = "jdbc:mysql://localhost:3306/book_manager?useSSL=false";
     private static String jdbcUsername = "root";
-    private static String jdbcPassword = "quyet2621994!";
+    private static String jdbcPassword = "1quyet2621994!";
 
     public static Connection getConnection(){
         Connection connection = null;
@@ -22,6 +22,7 @@ public class Database {
     }
 
 }
+// file không commit
 
 
 
