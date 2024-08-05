@@ -15,13 +15,16 @@
 <div id="container">
     <%@ include file="sidebar.jsp" %>
     <div id="main">
-        <h1>Welcome</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-            commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-        <h2>Test</h2>
-        <p>Lorem ipsum...</p>
+        <h1>Giới Thiệu Nhóm Đà Nẵng - Lớp C0424G1 - JV101</h1>
+        <p>Thành Viên 1: Nguyễn Đức Thảo Nguyên</p>
+        <p>Sinh năm: 1997</p>
+        <p>Quê quán: Quảng Nam</p>
+        <p>Thường trú: Liên Chiểu, Đà Nẵng</p>
+        <br>
+        <p>Thành Viên 2: Nguyễn Đức Thảo Nguyên</p>
+        <p>Sinh năm: 1997</p>
+        <p>Quê quán: Quảng Ngãi</p>
+        <p>Thường trú: Quảng Ngãi</p>
     </div>
 </div>
 <%@ include file="footer.jsp" %>
