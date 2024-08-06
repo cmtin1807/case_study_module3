@@ -76,6 +76,8 @@ public class BorrowTransactionDTO {
             this.statusBorrowType = statusBorrowType;
     }
 
+
+
     public int getId() {
         return id;
     }

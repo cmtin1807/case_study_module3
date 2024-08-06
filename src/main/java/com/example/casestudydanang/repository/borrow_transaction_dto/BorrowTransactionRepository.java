@@ -33,13 +33,11 @@ public class BorrowTransactionRepository implements IBorrowTransactionRepository
             "            join category on Book.category_id = category.category_id\n" +
             "            join publisher on Book.publisher_id = publisher.publisher_id\n" +
             "            WHERE  borrow_transactions_id = ?;";
-    private static final String SHOW_BORROW_BY_CODE_CUSTOMER ="select borrow_transactions_id, customer_name, customer_code, customer_class, customer_birthday, name, image_url, status, category_name, publisher_name, borrow_date, return_date, status_borrow_type from customers " +
-            "join borrow_transactions on customers.customer_id = borrow_transactions.customer_id " +
-            "join status_borrow on borrow_transactions.status_borrow_id = status_borrow.status_borrow_id " +
-            "join Book on borrow_transactions.book_id = Book.book_id " +
-            "join category on Book.category_id = category.category_id " +
-            "join publisher on Book.publisher_id = publisher.publisher_id " +
-            "WHERE Customers.customer_is_active = true and Customers.customer_code = ?;";
+    private static final String SHOW_BORROW_BY_CODE_CUSTOMER ="select borrow_transactions_id, customer_name, customer_code, name, status_borrow_type from Customers\n" +
+            "join  borrow_transactions on Customers.customer_id = borrow_transactions.customer_id\n" +
+            "join Book on borrow_transactions.book_id = Book.book_id\n" +
+            "join status_borrow on borrow_transactions.status_borrow_id = status_borrow.status_borrow_id\n" +
+            "where customer_code = ?;";
     private static final String INSERT_BORROW_TRANSACTION = "INSERT INTO borrow_transactions (customer_id, book_id, borrow_date, return_date, status_borrow_id) " +
             "VALUES (?, ?, ?, ?, ?)";
     private static final String UPDATE_BORROW_TRANSACTION = "UPDATE borrow_transactions SET customer_id = ?, book_id = ?, borrow_date = ?, return_date = ?, status_borrow_id = ? WHERE borrow_transactions_id = ?";
@@ -143,18 +141,10 @@ public class BorrowTransactionRepository implements IBorrowTransactionRepository
             while (rs.next()) {
                 int id = rs.getInt("borrow_transactions_id");
                 String nameCustomer = rs.getString("customer_name");
-                String classCustomer = rs.getString("customer_class");
-                Date birthDate = rs.getDate("customer_birthday");
                 String nameBook = rs.getString("name");
-                String imageUrl = rs.getString("image_url");
-                boolean status = rs.getBoolean("status");
-                String categoryName = rs.getString("category_name");
-                String publisherName = rs.getString("publisher_name");
-                Date borrowDate = rs.getDate("borrow_date");
-                Date returnDate = rs.getDate("return_date");
                 String statusBorrowType = rs.getString("status_borrow_type");
 
-                BorrowTransactionDTO borrowTransactionDTO = new BorrowTransactionDTO(id, nameCustomer, codeCustomer, classCustomer, null, birthDate, nameBook, imageUrl, status, categoryName, publisherName, borrowDate, returnDate, statusBorrowType);
+                BorrowTransactionDTO borrowTransactionDTO = new BorrowTransactionDTO(id, nameCustomer, codeCustomer,  nameBook, statusBorrowType);
                 borrowTransactionDTOList.add(borrowTransactionDTO);
             }
         } catch (SQLException e) {
