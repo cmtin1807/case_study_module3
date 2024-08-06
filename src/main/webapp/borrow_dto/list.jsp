@@ -6,8 +6,13 @@
     <meta charset="UTF-8">
     <title>List of Borrow Transactions</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <%@ include file="css/styles.css" %>
 </head>
 <body>
+<%@ include file="css/header.jsp" %>
+<%@ include file="css/nav.jsp" %>
+<div id="container">
+    <%@ include file="css/sidebar.jsp" %>
 <div class="container">
     <h1 class="my-4">List of Borrow Transactions</h1>
     <a href="borrows?action=create" class="btn btn-primary mb-3">Create New Transaction</a>
@@ -53,6 +58,8 @@
         </tbody>
     </table>
 </div>
+</div>
+<%@ include file="css/footer.jsp" %>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
