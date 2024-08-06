@@ -92,8 +92,6 @@ join Book on borrow_transactions.book_id = Book.book_id
 join status_borrow on borrow_transactions.status_borrow_id = status_borrow.status_borrow_id
 where Customers.is_deleted = false;
 
-=======
-
 SELECT b.*, c.category_name, p.publisher_name
 FROM Book b
          JOIN Category c ON b.category_id = c.category_id
