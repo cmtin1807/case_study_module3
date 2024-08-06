@@ -6,8 +6,13 @@
     <meta charset="UTF-8">
     <title>View Borrow Transaction</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <%@ include file="css/styles.css" %>
 </head>
 <body>
+<%@ include file="css/header.jsp" %>
+<%@ include file="css/nav.jsp" %>
+<div id="container">
+    <%@ include file="css/sidebar.jsp" %>
 <div class="container">
     <h1 class="my-4">View Borrow Transaction</h1>
     <div class="card">
@@ -38,6 +43,8 @@
         </div>
     </div>
 </div>
+</div>
+<%@ include file="css/footer.jsp" %>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

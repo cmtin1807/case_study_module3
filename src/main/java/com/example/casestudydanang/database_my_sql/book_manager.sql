@@ -69,4 +69,5 @@ join Book on borrow_transactions.book_id = Book.book_id
 join status_borrow on borrow_transactions.status_borrow_id = status_borrow.status_borrow_id
 where customer_code = ?;
 
-
+ALTER TABLE customers
+    ADD COLUMN is_deleted boolean ;

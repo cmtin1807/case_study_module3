@@ -7,8 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Edit Customer</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <%@ include file="css/styles.css" %>
 </head>
 <body>
+<%@ include file="css/header.jsp" %>
+<%@ include file="css/nav.jsp" %>
+<div id="container">
+    <%@ include file="css/sidebar.jsp" %>
 <div class="container mt-5">
     <h1 class="mb-4">Edit Customer Information</h1>
     <form action="<c:url value='/customers' />" method="post">
@@ -45,6 +50,8 @@
         <a href="<c:url value='/customers'/>" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
+</div>
+<%@ include file="css/footer.jsp" %>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

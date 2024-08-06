@@ -34,7 +34,6 @@ public class BookService implements IBookService {
     @Override
     public void delete(int id) {
         bookRepository.delete(id);
-
     }
 
     @Override
