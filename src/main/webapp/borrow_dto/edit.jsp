@@ -15,6 +15,11 @@
     <%@ include file="css/sidebar.jsp" %>
 <div class="container">
     <h1 class="my-4">Edit Borrow Transaction</h1>
+    <c:if test="${not empty errorMessage or not empty successMessage}">
+        <div class="alert ${not empty successMessage ? 'alert-success' : 'alert-danger'}" role="alert">
+                ${not empty successMessage ? successMessage : errorMessage}
+        </div>
+    </c:if>
     <form action="/borrows?action=edit" method="post">
         <!-- Hidden field to store the id of the transaction being edited -->
         <input type="hidden" name="id" value="${borrow.id}" />

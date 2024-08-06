@@ -182,6 +182,11 @@ public class BorrowTransactionServlet extends HttpServlet {
 
         BorrowService borrowService = new BorrowService();
         CustomerService customerService = new CustomerService();
+        BookService bookService = new BookService();
+
+        List<Customer> customers = customerService.findAll();
+        List<Book> books = bookService.findAll();
+
 
         Customer customer = customerService.findById(customerId);
         customer.setIsDeleted(false);
@@ -195,6 +200,23 @@ public class BorrowTransactionServlet extends HttpServlet {
         }
         if (returnDate != null && !returnDate.isEmpty()) {
             returnDateSql = java.sql.Date.valueOf(LocalDate.parse(returnDate));
+        }
+        if (returnDateSql != null && borrowDateSql != null && returnDateSql.before(borrowDateSql)) {
+            request.setAttribute("errorMessage", "Ngày trả không được trước ngày mượn.");
+            request.setAttribute("customerId", customerId);
+            request.setAttribute("bookId", bookId);
+            request.setAttribute("borrowDate", borrowDate);
+            request.setAttribute("returnDate", returnDate);
+            request.setAttribute("customers", customers);
+            request.setAttribute("books", books);
+
+            RequestDispatcher dispatcher = request.getRequestDispatcher("borrow_dto/create.jsp");
+            try {
+                dispatcher.forward(request, response);
+            } catch (ServletException | IOException e) {
+                throw new RuntimeException(e);
+            }
+            return;
         }
 
         Borrow newBorrow = new Borrow(customerId, bookId, borrowDateSql, returnDateSql, statusBorrowId);
@@ -218,6 +240,15 @@ public class BorrowTransactionServlet extends HttpServlet {
         String returnDate = request.getParameter("returnDate");
         int statusBorrowId = Integer.parseInt(request.getParameter("statusBorrowId"));
 
+        StatusBorrowService statusBorrowService = new StatusBorrowService();
+        BorrowService borrowService = new BorrowService();
+        CustomerService customerService = new CustomerService();
+        BookService bookService = new BookService();
+
+        List<Customer> customers = customerService.findAll();
+        List<Book> books = bookService.findAll();
+        List<StatusBorrow> statusBorrows = statusBorrowService.findAll();
+
         java.sql.Date borrowDateSql = null;
         java.sql.Date returnDateSql = null;
         if (borrowDate != null && !borrowDate.isEmpty()) {
@@ -227,7 +258,26 @@ public class BorrowTransactionServlet extends HttpServlet {
             returnDateSql = java.sql.Date.valueOf(LocalDate.parse(returnDate));
         }
 
-        BorrowService borrowService = new BorrowService();
+        if (returnDateSql != null && borrowDateSql != null && returnDateSql.before(borrowDateSql)) {
+            request.setAttribute("errorMessage", "Ngày trả không được trước ngày mượn.");
+            request.setAttribute("customerId", customerId);
+            request.setAttribute("bookId", bookId);
+            request.setAttribute("borrowDate", borrowDate);
+            request.setAttribute("returnDate", returnDate);
+            request.setAttribute("customers", customers);
+            request.setAttribute("books", books);
+            request.setAttribute("status", statusBorrows);
+
+            RequestDispatcher dispatcher = request.getRequestDispatcher("borrow_dto/edit.jsp");
+            try {
+                dispatcher.forward(request, response);
+            } catch (ServletException | IOException e) {
+                throw new RuntimeException(e);
+            }
+            return;
+        }
+
+
 
         Borrow borrow = new Borrow(customerId, bookId, borrowDateSql, returnDateSql, statusBorrowId);
         borrowService.update(id,borrow);

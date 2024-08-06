@@ -16,9 +16,9 @@
 <div class="container">
     <h1 class="my-4">List of Borrow Transactions</h1>
     <a href="borrows?action=create" class="btn btn-primary mb-3">Create New Transaction</a>
-    <c:if test="${not empty successMessage}">
-        <div class="alert alert-success" role="alert">
-                ${successMessage}
+    <c:if test="${not empty errorMessage or not empty successMessage}">
+        <div class="alert ${not empty successMessage ? 'alert-success' : 'alert-danger'}" role="alert">
+                ${not empty successMessage ? successMessage : errorMessage}
         </div>
     </c:if>
     <form action="borrows" method="get">
