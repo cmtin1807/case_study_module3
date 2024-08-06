@@ -43,7 +43,6 @@
                 <td>${customer.birthDate}</td>
                 <td><c:out value="${customer.active ? 'Yes' : 'No'}"/></td>
                 <td>
-                    <a href="<c:url value='/customers?action=view&id=${customer.id}'/>" class="btn btn-primary btn-sm">View</a>
                     <a href="<c:url value='/customers?action=edit&id=${customer.id}'/>" class="btn btn-secondary btn-sm">Edit</a>
                     <c:if test="${customer.isDeleted == false}">
                         <a href="<c:url value='/customers?action=delete&id=${customer.id}'/>" class="btn btn-danger btn-sm">Delete</a>

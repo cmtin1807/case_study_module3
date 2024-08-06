@@ -32,11 +32,5 @@ insert into status_borrow(status_borrow_type) values ('On loan');
 insert into status_borrow(status_borrow_type) values ('Overdue');
 insert into status_borrow(status_borrow_type) values ('Repaid');
 
-INSERT INTO User (username, password, role) VALUES ('admin', '123', 'admin');
 
-
-INSERT INTO User (username, password, role) VALUES ('nguyen', '123', 'customer');
-INSERT INTO User (username, password, role) VALUES ('quyet', '456', 'customer');
-INSERT INTO User (username, password, role) VALUES ('alice_johnson', 'password789', 'customer');
-INSERT INTO User (username, password, role) VALUES ('bob_brown', 'password101', 'customer');
 
