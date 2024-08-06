@@ -94,7 +94,6 @@ public class CustomerServlet extends HttpServlet {
         List<Customer> customers = customerService.findAll();
         request.setAttribute("customers", customers);
 
-        customers.forEach(customer -> System.out.println(customer)); // Debugging line
         RequestDispatcher dispatcher = request.getRequestDispatcher("customer/list.jsp");
 
         try {

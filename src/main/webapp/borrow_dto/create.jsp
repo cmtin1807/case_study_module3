@@ -10,7 +10,12 @@
 <body>
 <div class="container">
     <h1 class="my-4">Create Borrow Transaction</h1>
-    <form action="/borrows?action=edit" method="post">
+    <c:if test="${not empty successMessage}">
+        <div class="alert alert-success" role="alert">
+                ${successMessage}
+        </div>
+    </c:if>
+    <form action="/borrows?action=create" method="post">
         <div class="form-group">
             <label for="customerId">Customer:</label>
             <select class="form-control" id="customerId" name="customerId">
@@ -39,14 +44,6 @@
         <div class="form-group">
             <label for="returnDate">Return Date:</label>
             <input type="date" class="form-control" id="returnDate" name="returnDate" required>
-        </div>
-        <div class="form-group">
-            <label for="bookId">Status:</label>
-            <select class="form-control" id="status" name="status">
-                <c:forEach var="status" items="${books}">
-                    <option value="${status.id}">${status.name}</option>
-                </c:forEach>
-            </select>
         </div>
         <button type="submit" class="btn btn-primary">Create Borrow Transaction</button>
     </form>
