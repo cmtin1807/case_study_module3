@@ -113,7 +113,7 @@ public class BorrowTransactionServlet extends HttpServlet {
         List<BorrowTransactionDTO> borrowTransactionDTOS = service.findByCodeCustomer(codeCustomer);
 
         request.setAttribute("borrows", borrowTransactionDTOS);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("borrow_dto/search.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("borrow_dto/list.jsp");
         dispatcher.forward(request, response);
     }
 

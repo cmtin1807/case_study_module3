@@ -16,7 +16,14 @@
                 ${successMessage}
         </div>
     </c:if>
-
+    <form action="borrows" method="get">
+        <input type="hidden" name="action" value="search">
+        <div class="form-group">
+            <label for="codeCustomer">Mã Khách Hàng:</label>
+            <input type="text" id="codeCustomer" name="codeCustomer" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Tìm Kiếm</button>
+    </form>
     <table class="table table-bordered">
         <thead class="thead-dark">
         <tr>

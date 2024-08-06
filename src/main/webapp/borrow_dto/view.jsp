@@ -25,14 +25,14 @@
             <h5 class="card-title">Book Information</h5>
             <p class="card-text"><strong>Name:</strong> ${borrow.nameBook}</p>
             <p class="card-text"><strong>Image:</strong> <img src="${borrow.imageUrl}" alt="${borrow.nameBook}" class="img-thumbnail" style="max-width: 200px;"></p>
-            <p class="card-text"><strong>Status:</strong> ${borrow.status ? "Available" : "Not Available"}</p>
+            <p class="card-text"><strong>Status:</strong> ${borrow.status ? "New" : "Use"}</p>
             <p class="card-text"><strong>Category:</strong> ${borrow.categoryName}</p>
             <p class="card-text"><strong>Publisher:</strong> ${borrow.publisherName}</p>
 
             <h5 class="card-title">Transaction Information</h5>
             <p class="card-text"><strong>Borrow Date:</strong> ${borrow.borrowDate}</p>
             <p class="card-text"><strong>Return Date:</strong> ${borrow.returnDate}</p>
-            <p class="card-text"><strong>Status:</strong> ${borrow.statusBorrowType}</p>
+            <p class="card-text"><strong>StatusBorrow:</strong> ${borrow.statusBorrowType}</p>
 
             <a href="borrows?action=list" class="btn btn-primary">Back to List</a>
         </div>

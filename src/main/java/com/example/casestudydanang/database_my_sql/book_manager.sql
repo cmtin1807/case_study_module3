@@ -63,6 +63,10 @@ BEGIN
 END //
 
 DELIMITER ;
-
+select borrow_transactions_id, customer_name, customer_code, customer_class, name, status_borrow_type from Customers
+join  borrow_transactions on Customers.customer_id = borrow_transactions.customer_id
+join Book on borrow_transactions.book_id = Book.book_id
+join status_borrow on borrow_transactions.status_borrow_id = status_borrow.status_borrow_id
+where customer_code = ?;
 
 
