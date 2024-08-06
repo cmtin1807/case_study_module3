@@ -54,49 +54,6 @@ CREATE TABLE borrow_transactions
     FOREIGN KEY (book_id) references  Book(book_id),
     FOREIGN KEY (status_borrow_id) references status_borrow(status_borrow_id)
 );
-CREATE TABLE User (
-                      id INT PRIMARY KEY AUTO_INCREMENT,
-                      username VARCHAR(50) NOT NULL,
-                      password VARCHAR(50) NOT NULL,
-                      role VARCHAR(20) NOT NULL
-);
-
-
-
-DELIMITER //
-CREATE PROCEDURE show_list(
-)
-BEGIN
-    SELECT book.name, book.description, book.image_url, book.status, category.category_name, Publisher.publisher_name
-    FROM book
-             Join Publisher on book.publisher_id = Publisher.publisher_id
-             join category on book.category_id = category.category_id;
-end //
-DELIMITER ;
-select customer_id, customer_name, customer_code, customer_class, customer_address,customer_birthday, customer_is_active from customers;
-ALTER TABLE Customers ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
-SELECT customer_id, customer_name, customer_code,
-            customer_class, customer_address, customer_birthday, customer_is_active FROM customers WHERE is_deleted = FALSE;
-select borrow_transactions_id,customer_name, customer_code, customer_class, customer_birthday, name, image_url, status, category_name, publisher_name, borrow_date, return_date, status_borrow_type from customers
-    join borrow_transactions on customers.customer_id = borrow_transactions.customer_id
-join status_borrow on borrow_transactions.status_borrow_id = status_borrow.status_borrow_id
-join Book on borrow_transactions.book_id = Book.book_id
-join category on Book.category_id = category.category_id
-join publisher on Book.publisher_id = publisher.publisher_id
-WHERE Customers.is_deleted = false;
-use book_manager;
-create database demo;
-select borrow_transactions_id, customer_name, customer_code, name, status_borrow_type from Customers
-join borrow_transactions  on Customers.customer_id = borrow_transactions.customer_id
-join Book on borrow_transactions.book_id = Book.book_id
-join status_borrow on borrow_transactions.status_borrow_id = status_borrow.status_borrow_id
-where Customers.is_deleted = false;
-
-SELECT b.*, c.category_name, p.publisher_name
-FROM Book b
-         JOIN Category c ON b.category_id = c.category_id
-         JOIN Publisher p ON b.publisher_id = p.publisher_id
-WHERE c.category_name LIKE 'Ngôn Tình';
 
 DELIMITER //
 
@@ -106,4 +63,15 @@ BEGIN
 END //
 
 DELIMITER ;
+select borrow_transactions_id, customer_name, customer_code, customer_class, customer_address, customer_birthday, name, image_url, status, category_name, publisher_name, borrow_date, return_date, status_borrow_type from customers
+            join borrow_transactions on customers.customer_id = borrow_transactions.customer_id
+            join status_borrow on borrow_transactions.status_borrow_id = status_borrow.status_borrow_id
+            join Book on borrow_transactions.book_id = Book.book_id
+            join category on Book.category_id = category.category_id
+            join publisher on Book.publisher_id = publisher.publisher_id
+            WHERE Customers.customer_is_active = true and borrow_transactions_id = ?;
+SELECT DISTINCT customer_name, customer_code, customer_class, customer_address, customer_birthday, customer_is_active
+FROM Customers;
+
+
 

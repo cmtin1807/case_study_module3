@@ -11,11 +11,13 @@ import java.util.List;
 
 public class BorrowTransactionDTO {
     private int id;
+    private int customerId;
     private String nameCustomer;
     private String codeCustomer;
     private String classCustomer;
     private String address;
     private java.sql.Date birthDate;
+    private int bookId;
     private String nameBook;
     private String imageUrl;
     private boolean status;
@@ -23,6 +25,7 @@ public class BorrowTransactionDTO {
     private String publisherName;
     private java.sql.Date borrowDate;
     private java.sql.Date returnDate;
+    private int statusBorrowId;
     private String statusBorrowType;
 
     public BorrowTransactionDTO() {
@@ -54,6 +57,23 @@ public class BorrowTransactionDTO {
         this.borrowDate = borrowDate;
         this.returnDate = returnDate;
         this.statusBorrowType = statusBorrowType;
+    }
+
+    public BorrowTransactionDTO(int id, String nameCustomer, String codeCustomer, String classCustomer, String address, java.util.Date birthDate, String nameBook, String imageUrl, boolean status, String categoryName, String publisherName, java.util.Date borrowDate, java.util.Date returnDate, String statusBorrowType) {
+            this.id = id;
+            this.nameCustomer = nameCustomer;
+            this.codeCustomer = codeCustomer;
+            this.classCustomer = classCustomer;
+            this.address = address;
+            this.birthDate = (Date) birthDate;
+            this.nameBook = nameBook;
+            this.imageUrl = imageUrl;
+            this.status = status;
+            this.categoryName = categoryName;
+            this.publisherName = publisherName;
+            this.borrowDate = (Date) borrowDate;
+            this.returnDate = (Date) returnDate;
+            this.statusBorrowType = statusBorrowType;
     }
 
     public int getId() {
@@ -166,6 +186,30 @@ public class BorrowTransactionDTO {
 
     public void setStatusBorrowType(String statusBorrowType) {
         this.statusBorrowType = statusBorrowType;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    public int getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
+    }
+
+    public int getStatusBorrowId() {
+        return statusBorrowId;
+    }
+
+    public void setStatusBorrowId(int statusBorrowId) {
+        this.statusBorrowId = statusBorrowId;
     }
 
     @Override

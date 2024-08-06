@@ -2,20 +2,20 @@ package com.example.casestudydanang.model;
 
 import java.sql.Date;
 
-public class BorrowTransaction {
+public class Borrow {
     private int id;
     private int customerId;
     private int bookId;
-    private Date borrowDate;
-    private Date returnDate;
+    private java.sql.Date borrowDate;
+    private java.sql.Date returnDate;
     private int statusBorrowId;
 
     // Constructor không tham số
-    public BorrowTransaction() {
+    public Borrow() {
     }
 
     // Constructor với tất cả các tham số
-    public BorrowTransaction(int id, int customerId, int bookId, Date borrowDate, Date returnDate, int statusBorrowId) {
+    public Borrow(int id, int customerId, int bookId, java.sql.Date borrowDate, java.sql.Date returnDate, int statusBorrowId) {
         this.id = id;
         this.customerId = customerId;
         this.bookId = bookId;
@@ -25,7 +25,7 @@ public class BorrowTransaction {
     }
 
     // Constructor không có ID (được tạo tự động)
-    public BorrowTransaction(int customerId, int bookId, Date borrowDate, Date returnDate, int statusBorrowId) {
+    public Borrow(int customerId, int bookId, java.sql.Date borrowDate, java.sql.Date returnDate, int statusBorrowId) {
         this.customerId = customerId;
         this.bookId = bookId;
         this.borrowDate = borrowDate;
@@ -33,7 +33,6 @@ public class BorrowTransaction {
         this.statusBorrowId = statusBorrowId;
     }
 
-    // Getter và Setter cho id
     public int getId() {
         return id;
     }
@@ -42,7 +41,6 @@ public class BorrowTransaction {
         this.id = id;
     }
 
-    // Getter và Setter cho customerId
     public int getCustomerId() {
         return customerId;
     }
@@ -51,7 +49,6 @@ public class BorrowTransaction {
         this.customerId = customerId;
     }
 
-    // Getter và Setter cho bookId
     public int getBookId() {
         return bookId;
     }
@@ -60,7 +57,6 @@ public class BorrowTransaction {
         this.bookId = bookId;
     }
 
-    // Getter và Setter cho borrowDate
     public Date getBorrowDate() {
         return borrowDate;
     }
@@ -69,7 +65,6 @@ public class BorrowTransaction {
         this.borrowDate = borrowDate;
     }
 
-    // Getter và Setter cho returnDate
     public Date getReturnDate() {
         return returnDate;
     }
@@ -78,7 +73,6 @@ public class BorrowTransaction {
         this.returnDate = returnDate;
     }
 
-    // Getter và Setter cho statusBorrowId
     public int getStatusBorrowId() {
         return statusBorrowId;
     }
@@ -89,7 +83,7 @@ public class BorrowTransaction {
 
     @Override
     public String toString() {
-        return "BorrowTransaction{" +
+        return "Borrow{" +
                 "id=" + id +
                 ", customerId=" + customerId +
                 ", bookId=" + bookId +

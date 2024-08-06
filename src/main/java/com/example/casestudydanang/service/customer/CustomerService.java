@@ -13,6 +13,10 @@ public class CustomerService implements ICustomerService {
         return customerRepository.findAll();
     }
 
+    public List<Customer> findAllInBorrowCustomer() {
+        return customerRepository.findAllInBorrowedCustomer();
+    }
+
     @Override
     public Customer findById(int id) {
         return customerRepository.findById(id);

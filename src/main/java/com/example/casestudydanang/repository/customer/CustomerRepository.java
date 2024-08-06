@@ -16,6 +16,8 @@ public class CustomerRepository implements ICustomerRepository {
     private static final String CREATE_CUSTOMER = "INSERT INTO customers (customer_name, customer_code, customer_class, customer_address, customer_birthday) VALUES (?, ?, ?, ?, ?)";
     private static final String SHOW_ALL_LIST_CUSTOMER = "SELECT customer_id, customer_name, customer_code, " +
             "customer_class, customer_address, customer_birthday, customer_is_active, is_deleted FROM customers WHERE is_deleted = FALSE";
+    private static final String SHOW_ALL_LIST_CUSTOMER_IN_BORROW = "SELECT customer_id, customer_name, customer_code, " +
+            "customer_class, customer_address, customer_birthday, customer_is_active, is_deleted FROM customers ";
     private static final String UPDATE_CUSTOMER = "UPDATE customers SET customer_name = ?, customer_code = ?, " +
             "customer_class = ?, customer_address = ?, customer_birthday = ?, customer_is_active = ?, is_deleted = ? WHERE customer_id = ?";
     private static final String FIND_CUSTOMER_BY_ID = "SELECT * FROM customers WHERE customer_id = ?";
@@ -39,8 +41,33 @@ public class CustomerRepository implements ICustomerRepository {
                 customer.setIsDeleted(rs.getBoolean("is_deleted"));
                 customers.add(customer);
 
-                // In ra số lượng khách hàng để kiểm tra
-                System.out.println("Number of customers fetched: " + customers.size());
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customers;
+    }
+
+    public List<Customer> findAllInBorrowedCustomer() {
+        List<Customer> customers = new ArrayList<>();
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(SHOW_ALL_LIST_CUSTOMER_IN_BORROW);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Customer customer = new Customer();
+                customer.setId(rs.getInt("customer_id"));
+                customer.setName(rs.getString("customer_name"));
+                customer.setCodeCustomer(rs.getString("customer_code"));
+                customer.setClassCustomer(rs.getString("customer_class"));
+                customer.setAddress(rs.getString("customer_address"));
+                customer.setBirthDate(rs.getDate("customer_birthday"));
+                customer.setActive(rs.getBoolean("customer_is_active"));
+                customer.setIsDeleted(rs.getBoolean("is_deleted"));
+                customers.add(customer);
+
             }
 
         } catch (SQLException e) {
