@@ -40,10 +40,8 @@ customerRepository.save(object);
         Customer customer = customerRepository.findById(id);
         if (customer != null) {
             if (customer.getActive()) {
-                // Nếu khách hàng đang hoạt động, không cho phép xóa mềm
                 System.out.println("Khách hàng đang hoạt động, không thể xóa.");
             } else {
-                // Nếu khách hàng không hoạt động, thực hiện xóa mềm
                 customer.setIsDeleted(true);
                 customerRepository.update(id, customer);
             }

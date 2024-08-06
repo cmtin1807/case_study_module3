@@ -40,6 +40,9 @@ public class BorrowTransactionServlet extends HttpServlet {
             case "delete":
                 deleteBorrowTransaction(request, response);
                 break;
+            case "edit":
+                showFormUpdate(request, response);
+                break;
             case "search":
                 showFormSearch(request, response);
                 break;
@@ -52,20 +55,48 @@ public class BorrowTransactionServlet extends HttpServlet {
         }
     }
 
-    private void showFormCreate(HttpServletRequest request, HttpServletResponse response) {
+    private void showFormUpdate(HttpServletRequest request, HttpServletResponse response) {
+
+        BorrowService borrowService = new BorrowService();
         BookService bookService = new BookService();
         CustomerService customerService = new CustomerService();
         StatusBorrowService statusBorrowService = new StatusBorrowService();
 
-
         List<Book> books = bookService.findAll();
-        List<Customer> customers = customerService.findAllInBorrowCustomer();
-        List<StatusBorrow> statusBorrows = statusBorrowService.findAll();
+        List<Customer> customers = customerService.findAll();
+        List<StatusBorrow> status = statusBorrowService.findAll();
 
-        System.out.println(customers.size());
+        int id = Integer.parseInt(request.getParameter("id"));
+
+        Borrow borrow = borrowService.findById(id);
+        System.out.println(borrow.toString());
+
         request.setAttribute("books", books);
         request.setAttribute("customers", customers);
-        request.setAttribute("statusBorrows", statusBorrows);
+        request.setAttribute("status", status);
+        request.setAttribute("borrow", borrow);
+
+
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("borrow_dto/edit.jsp");
+        try {
+            requestDispatcher.forward(request, response);
+        } catch (ServletException | IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    private void showFormCreate(HttpServletRequest request, HttpServletResponse response) {
+        BookService bookService = new BookService();
+        CustomerService customerService = new CustomerService();
+
+
+        List<Book> books = bookService.findAll();
+        List<Customer> customers = customerService.findAll();
+
+
+        request.setAttribute("books", books);
+        request.setAttribute("customers", customers);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("borrow_dto/create.jsp");
 
         try {
@@ -89,10 +120,20 @@ public class BorrowTransactionServlet extends HttpServlet {
     private void deleteBorrowTransaction(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         service.delete(id);
-        response.sendRedirect("/borrows");
+
+        List<BorrowTransactionDTO> borrows = service.findBasicBorrow();
+        request.setAttribute("borrows", borrows);
+        request.setAttribute("successMessage", "Phiếu mượn đã được xóa thành công!");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("borrow_dto/list.jsp");
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
-    private void showViewBorrow(HttpServletRequest request, HttpServletResponse response)  {
+    private void showViewBorrow(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
         BorrowTransactionDTO borrowTransactionDTO = service.findById(id);
         System.out.println(borrowTransactionDTO.toString());
@@ -132,50 +173,71 @@ public class BorrowTransactionServlet extends HttpServlet {
     }
 
     private void createBorrowTransaction(HttpServletRequest request, HttpServletResponse response) {
-            BorrowService borrowService = new BorrowService();
 
-            int customerId = Integer.parseInt(request.getParameter("customerId"));
-            int bookId = Integer.parseInt(request.getParameter("bookId"));
-            String borrowDate = request.getParameter("borrowDate");
-            String returnDate = request.getParameter("returnDate");
-            int statusBorrowId = Integer.parseInt(request.getParameter("statusBorrowId"));
+        int customerId = Integer.parseInt(request.getParameter("customerId"));
+        int bookId = Integer.parseInt(request.getParameter("bookId"));
+        String borrowDate = request.getParameter("borrowDate");
+        String returnDate = request.getParameter("returnDate");
+        int statusBorrowId = 1;
 
-            java.sql.Date borrowDateSql = null;
-            java.sql.Date returnDateSql = null;
-            if (borrowDate != null && !borrowDate.isEmpty()) {
-                borrowDateSql = java.sql.Date.valueOf(LocalDate.parse(borrowDate));
-            }
-            if (returnDate != null && !returnDate.isEmpty()) {
-                returnDateSql = java.sql.Date.valueOf(LocalDate.parse(returnDate));
-            }
+        BorrowService borrowService = new BorrowService();
+        CustomerService customerService = new CustomerService();
 
-            Borrow newBorrow = new Borrow(customerId, bookId, borrowDateSql, returnDateSql, statusBorrowId);
-            borrowService.save(newBorrow);
+        Customer customer = customerService.findById(customerId);
+        customer.setIsDeleted(false);
+        customerService.update(customerId, customer);
 
 
+        java.sql.Date borrowDateSql = null;
+        java.sql.Date returnDateSql = null;
+        if (borrowDate != null && !borrowDate.isEmpty()) {
+            borrowDateSql = java.sql.Date.valueOf(LocalDate.parse(borrowDate));
+        }
+        if (returnDate != null && !returnDate.isEmpty()) {
+            returnDateSql = java.sql.Date.valueOf(LocalDate.parse(returnDate));
+        }
+
+        Borrow newBorrow = new Borrow(customerId, bookId, borrowDateSql, returnDateSql, statusBorrowId);
+        borrowService.save(newBorrow);
+        request.setAttribute("successMessage", "Phiếu mượn đã được tạo thành công!");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("borrow_dto/create.jsp");
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void updateBorrowTransaction(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         int id = Integer.parseInt(request.getParameter("id"));
-        String nameCustomer = request.getParameter("nameCustomer");
-        String codeCustomer = request.getParameter("codeCustomer");
-        String classCustomer = request.getParameter("classCustomer");
-        String address = request.getParameter("address");
-        Date birthDate = Date.valueOf(request.getParameter("birthDate"));
-        String nameBook = request.getParameter("nameBook");
-        String imageUrl = request.getParameter("imageUrl");
-        boolean status = Boolean.parseBoolean(request.getParameter("status"));
-        String categoryName = request.getParameter("categoryName");
-        String publisherName = request.getParameter("publisherName");
-        Date borrowDate = Date.valueOf(request.getParameter("borrowDate"));
-        Date returnDate = Date.valueOf(request.getParameter("returnDate"));
-        String statusBorrowType = request.getParameter("statusBorrowType");
+        int customerId = Integer.parseInt(request.getParameter("customerId"));
+        int bookId = Integer.parseInt(request.getParameter("bookId"));
+        String borrowDate = request.getParameter("borrowDate");
+        String returnDate = request.getParameter("returnDate");
+        int statusBorrowId = Integer.parseInt(request.getParameter("statusBorrowId"));
 
-        BorrowTransactionDTO updatedBorrowTransaction = new BorrowTransactionDTO(nameCustomer, codeCustomer, classCustomer, address, birthDate,
-                nameBook, imageUrl, status, categoryName, publisherName, borrowDate, returnDate, statusBorrowType);
-        updatedBorrowTransaction.setId(id);
+        java.sql.Date borrowDateSql = null;
+        java.sql.Date returnDateSql = null;
+        if (borrowDate != null && !borrowDate.isEmpty()) {
+            borrowDateSql = java.sql.Date.valueOf(LocalDate.parse(borrowDate));
+        }
+        if (returnDate != null && !returnDate.isEmpty()) {
+            returnDateSql = java.sql.Date.valueOf(LocalDate.parse(returnDate));
+        }
 
-        service.updateBorrow(updatedBorrowTransaction);
-        response.sendRedirect("/borrows");
+        BorrowService borrowService = new BorrowService();
+
+        Borrow borrow = new Borrow(customerId, bookId, borrowDateSql, returnDateSql, statusBorrowId);
+        borrowService.update(id,borrow);
+        List<BorrowTransactionDTO> borrows = service.findBasicBorrow();
+        request.setAttribute("borrows", borrows);
+        request.setAttribute("successMessage", "Phiếu mượn đã được cập nhật thành công!");
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("borrow_dto/list.jsp");
+        dispatcher.forward(request, response);
+
+
     }
 }

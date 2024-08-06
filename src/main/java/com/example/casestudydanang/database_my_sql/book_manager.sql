@@ -63,15 +63,6 @@ BEGIN
 END //
 
 DELIMITER ;
-select borrow_transactions_id, customer_name, customer_code, customer_class, customer_address, customer_birthday, name, image_url, status, category_name, publisher_name, borrow_date, return_date, status_borrow_type from customers
-            join borrow_transactions on customers.customer_id = borrow_transactions.customer_id
-            join status_borrow on borrow_transactions.status_borrow_id = status_borrow.status_borrow_id
-            join Book on borrow_transactions.book_id = Book.book_id
-            join category on Book.category_id = category.category_id
-            join publisher on Book.publisher_id = publisher.publisher_id
-            WHERE Customers.customer_is_active = true and borrow_transactions_id = ?;
-SELECT DISTINCT customer_name, customer_code, customer_class, customer_address, customer_birthday, customer_is_active
-FROM Customers;
 
 
 

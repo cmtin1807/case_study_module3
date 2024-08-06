@@ -24,15 +24,15 @@ public class BorrowTransactionRepository implements IBorrowTransactionRepository
     private static final String SHOW_LIST_BASIC_BORROWS = "select borrow_transactions_id, customer_name, customer_code, name, status_borrow_type from Customers " +
             "join borrow_transactions  on Customers.customer_id = borrow_transactions.customer_id " +
             "join Book on borrow_transactions.book_id = Book.book_id " +
-            "join status_borrow on borrow_transactions.status_borrow_id = status_borrow.status_borrow_id " +
-            "where Customers.customer_is_active = true;";
+            "join status_borrow on borrow_transactions.status_borrow_id = status_borrow.status_borrow_id " ;
+//            "where Customers.customer_is_active = true;";
     private static final String SHOW_BORROW_BY_ID ="select borrow_transactions_id, customer_name, customer_code, customer_class, customer_address, customer_birthday, name, image_url, status, category_name, publisher_name, borrow_date, return_date, status_borrow_type from customers\n" +
             "            join borrow_transactions on customers.customer_id = borrow_transactions.customer_id\n" +
             "            join status_borrow on borrow_transactions.status_borrow_id = status_borrow.status_borrow_id\n" +
             "            join Book on borrow_transactions.book_id = Book.book_id\n" +
             "            join category on Book.category_id = category.category_id\n" +
             "            join publisher on Book.publisher_id = publisher.publisher_id\n" +
-            "            WHERE Customers.customer_is_active = true and borrow_transactions_id = ?;";
+            "            WHERE  borrow_transactions_id = ?;";
     private static final String SHOW_BORROW_BY_CODE_CUSTOMER ="select borrow_transactions_id, customer_name, customer_code, customer_class, customer_birthday, name, image_url, status, category_name, publisher_name, borrow_date, return_date, status_borrow_type from customers " +
             "join borrow_transactions on customers.customer_id = borrow_transactions.customer_id " +
             "join status_borrow on borrow_transactions.status_borrow_id = status_borrow.status_borrow_id " +

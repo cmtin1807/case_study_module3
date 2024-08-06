@@ -11,6 +11,12 @@
 <div class="container">
     <h1 class="my-4">List of Borrow Transactions</h1>
     <a href="borrows?action=create" class="btn btn-primary mb-3">Create New Transaction</a>
+    <c:if test="${not empty successMessage}">
+        <div class="alert alert-success" role="alert">
+                ${successMessage}
+        </div>
+    </c:if>
+
     <table class="table table-bordered">
         <thead class="thead-dark">
         <tr>
@@ -33,6 +39,7 @@
                 <td>
                     <a href="borrows?action=view&id=${borrow.id}" class="btn btn-info btn-sm">View</a>
                     <a href="borrows?action=delete&id=${borrow.id}" class="btn btn-danger btn-sm">Delete</a>
+                    <a href="borrows?action=edit&id=${borrow.id}" class="btn btn-danger btn-sm">Edit</a>
                 </td>
             </tr>
         </c:forEach>

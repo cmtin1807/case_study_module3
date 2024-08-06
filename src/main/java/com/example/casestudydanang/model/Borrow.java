@@ -10,11 +10,9 @@ public class Borrow {
     private java.sql.Date returnDate;
     private int statusBorrowId;
 
-    // Constructor không tham số
     public Borrow() {
     }
 
-    // Constructor với tất cả các tham số
     public Borrow(int id, int customerId, int bookId, java.sql.Date borrowDate, java.sql.Date returnDate, int statusBorrowId) {
         this.id = id;
         this.customerId = customerId;
@@ -24,7 +22,6 @@ public class Borrow {
         this.statusBorrowId = statusBorrowId;
     }
 
-    // Constructor không có ID (được tạo tự động)
     public Borrow(int customerId, int bookId, java.sql.Date borrowDate, java.sql.Date returnDate, int statusBorrowId) {
         this.customerId = customerId;
         this.bookId = bookId;

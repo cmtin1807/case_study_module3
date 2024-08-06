@@ -16,7 +16,7 @@ public class BorrowService implements IBorrowSevice {
 
     @Override
     public Borrow findById(int id) {
-        return null;
+        return borrowRepo.findById(id);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class BorrowService implements IBorrowSevice {
 
     @Override
     public void update(int id, Borrow object) {
-
+        borrowRepo.update(id, object);
     }
 
     @Override

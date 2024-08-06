@@ -11,8 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerRepository implements ICustomerRepository {
-//    private static final String SHOW_ALL_LIST_CUSTOMER = "SELECT customer_id, customer_name, customer_code, " +
-//            "customer_class, customer_address, customer_birthday, customer_is_active FROM customers";
+
     private static final String CREATE_CUSTOMER = "INSERT INTO customers (customer_name, customer_code, customer_class, customer_address, customer_birthday) VALUES (?, ?, ?, ?, ?)";
     private static final String SHOW_ALL_LIST_CUSTOMER = "SELECT customer_id, customer_name, customer_code, " +
             "customer_class, customer_address, customer_birthday, customer_is_active, is_deleted FROM customers WHERE is_deleted = FALSE";
