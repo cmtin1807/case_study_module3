@@ -88,3 +88,5 @@ FROM
 WHERE
     bt.return_date < CURRENT_DATE
   AND bt.status_borrow_id != 3;
+ALTER TABLE Customers
+    MODIFY COLUMN customer_is_active BOOLEAN DEFAULT FALSE;

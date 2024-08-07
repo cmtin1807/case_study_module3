@@ -189,6 +189,14 @@ public class BorrowTransactionServlet extends HttpServlet {
 
 
         Customer customer = customerService.findById(customerId);
+
+        if (!customer.getActive()){
+            customer.setActive(true);
+            customerService.update(customerId,customer);
+        }
+
+
+//        Customer customer = customerService.findById(customerId);
         customer.setIsDeleted(false);
         customerService.update(customerId, customer);
 
