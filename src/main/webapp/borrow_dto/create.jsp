@@ -15,9 +15,9 @@
     <%@ include file="css/sidebar.jsp" %>
 <div class="container">
     <h1 class="my-4">Create Borrow Transaction</h1>
-    <c:if test="${not empty successMessage}">
-        <div class="alert alert-success" role="alert">
-                ${successMessage}
+    <c:if test="${not empty errorMessage or not empty successMessage}">
+        <div class="alert ${not empty successMessage ? 'alert-success' : 'alert-danger'}" role="alert">
+                ${not empty successMessage ? successMessage : errorMessage}
         </div>
     </c:if>
     <form action="/borrows?action=create" method="post">

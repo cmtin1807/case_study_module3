@@ -71,3 +71,22 @@ where customer_code = ?;
 
 ALTER TABLE customers
     ADD COLUMN is_deleted boolean ;
+SELECT
+    bt.borrow_transactions_id,
+    c.customer_name,
+    c.customer_code,
+    b.name AS book_name,
+    sb.status_borrow_type
+FROM
+    Customers c
+        JOIN
+    borrow_transactions bt ON c.customer_id = bt.customer_id
+        JOIN
+    Book b ON bt.book_id = b.book_id
+        JOIN
+    status_borrow sb ON bt.status_borrow_id = sb.status_borrow_id
+WHERE
+    bt.return_date < CURRENT_DATE
+  AND bt.status_borrow_id != 3;
+ALTER TABLE Customers
+    MODIFY COLUMN customer_is_active BOOLEAN DEFAULT FALSE;
