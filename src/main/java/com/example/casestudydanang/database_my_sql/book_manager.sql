@@ -71,3 +71,6 @@ where customer_code = ?;
 
 ALTER TABLE customers
     ADD COLUMN is_deleted boolean ;
+
+ALTER TABLE customers
+    Modify COLUMN is_deleted boolean default false;
