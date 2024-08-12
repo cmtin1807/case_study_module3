@@ -25,10 +25,12 @@ import java.util.List;
 @WebServlet(name = "borrowTransactionServlet", value = "/borrows")
 public class BorrowTransactionServlet extends HttpServlet {
     private BorrowTransactionService service = new BorrowTransactionService();
+    private BorrowService borrowService = new BorrowService();
 
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+       borrowService.updateOverdueBorrows();
         String action = request.getParameter("action");
         if (action == null) {
             action = "";

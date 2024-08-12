@@ -90,3 +90,4 @@ WHERE
   AND bt.status_borrow_id != 3;
 ALTER TABLE Customers
     MODIFY COLUMN customer_is_active BOOLEAN DEFAULT FALSE;
+select count(*) from Customers;

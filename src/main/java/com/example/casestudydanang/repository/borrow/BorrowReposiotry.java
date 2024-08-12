@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,9 +18,28 @@ public class BorrowReposiotry implements IBorrowRepository{
 
     private static final String FIND_BORROW_TRANSACTION_BY_ID = "SELECT * FROM borrow_transactions WHERE borrow_transactions_id = ?;";
 
+    private static final String SHOW_ALL_LIST_BORROW = "SELECT * FROM borrow_transactions";
+
     @Override
     public List<Borrow> findAll() {
-        return Collections.emptyList();
+        List<Borrow> borrows = new ArrayList<>();
+        try (Connection connection = Database.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(SHOW_ALL_LIST_BORROW)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Borrow borrow = new Borrow();
+                borrow.setId(rs.getInt("borrow_transactions_id"));
+                borrow.setCustomerId(rs.getInt("customer_id"));
+                borrow.setBookId(rs.getInt("book_id"));
+                borrow.setBorrowDate(rs.getDate("borrow_date"));
+                borrow.setReturnDate(rs.getDate("return_date"));
+                borrow.setStatusBorrowId(rs.getInt("status_borrow_id"));
+                borrows.add(borrow);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return borrows;
     }
 
     @Override

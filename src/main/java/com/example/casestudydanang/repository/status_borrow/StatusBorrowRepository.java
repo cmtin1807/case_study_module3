@@ -52,4 +52,5 @@ public class StatusBorrowRepository implements IStatusBorrowRepository {
     public StatusBorrow findById(int id) {
         return null;
     }
+
 }

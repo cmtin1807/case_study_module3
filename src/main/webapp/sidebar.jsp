@@ -7,5 +7,6 @@
         <li><a href="/customers">Customer</a></li>
         <li><a href="/borrows">Borrow</a></li>
         <li><a href="/categories">Category</a></li>
+        <li><a href="/overdue">Overdue</a></li>
     </ul>
 </div>
