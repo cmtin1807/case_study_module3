@@ -29,7 +29,7 @@ public class BorrowDAO {
                 "    status_borrow sb ON bt.status_borrow_id = sb.status_borrow_id\n" +
                 "WHERE\n" +
                 "    bt.return_date < CURRENT_DATE\n" +
-                "  AND bt.status_borrow_id != 3;"; // Giả sử '3' là ID của trạng thái "Returned"
+                "  AND bt.status_borrow_id != 3;";
 
         try (Connection connection = Database.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

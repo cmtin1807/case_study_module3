@@ -16,6 +16,7 @@
     <%@ include file="css/sidebar.jsp" %>
 <div class="container mt-5">
     <h1 class="mb-4">Customer List</h1>
+    <a href="<c:url value='/customers?action=create'/>" class="btn btn-success">Add New Customer</a>
 
     <!-- Hiển thị thông báo nếu có -->
     <c:if test="${not empty message}">
@@ -57,7 +58,6 @@
         </c:forEach>
         </tbody>
     </table>
-    <a href="<c:url value='/customers?action=create'/>" class="btn btn-success">Add New Customer</a>
 </div>
 </div>
 <%@ include file="css/footer.jsp" %>

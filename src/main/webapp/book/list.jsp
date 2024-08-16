@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- coppy từ đây -->
     <%@ include file="css/styles.css" %>
+
+
+
 </head>
 <body>
 <%@ include file="css/header.jsp" %>
@@ -19,6 +22,7 @@
     <div class="container mt-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1>Book List</h1>
+            <a href="<c:url value='/books?action=create'/>" class="btn btn-success">Add New Book</a>
         </div>
         <c:if test="${not empty message}">
             <div class="alert alert-info mt-3">
@@ -117,7 +121,7 @@
             </ul>
         </div>
 
-        <a href="<c:url value='/books?action=create'/>" class="btn btn-success">Add New Book</a>
+
     </div>
 </div>
 <%@ include file="css/footer.jsp" %>
