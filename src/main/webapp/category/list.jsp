@@ -15,7 +15,7 @@
 <div class="container mt-5">
     <h1 class="mb-4">Category List</h1>
     <c:if test="${not empty messageCategory}">
-        <div class="alert alert-info mt-3">
+        <div class="alert alert-danger mt-3">
                 ${messageCategory}
         </div>
     </c:if>

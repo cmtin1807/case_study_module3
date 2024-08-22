@@ -112,5 +112,19 @@ body {
     bottom: 0;
     width: 100%;
 }
+/* styles.css */
+
+/* Giảm padding trong các ô của bảng */
+.table td,
+.table th {
+    padding: 0.3rem; /* Giảm padding xuống khoảng cách nhỏ hơn */
+    vertical-align: middle; /* Căn giữa theo chiều dọc */
+}
+
+/* Nếu muốn giảm thêm chiều cao, bạn có thể chỉnh sửa dòng dưới */
+.table {
+    font-size: 0.9rem; /* Giảm kích thước font chữ của bảng nếu cần */
+}
+
 
 </style>

@@ -16,6 +16,9 @@
     <%@ include file="css/sidebar.jsp" %>
     <div class="container mt-5">
         <h1 class="mb-4">Create a New Book</h1>
+        <c:if test="${not empty message}">
+            <div class="alert alert-info mt-3">${message}</div>
+        </c:if>
         <form action="<c:url value='/books?action=create'/>" method="post">
         <div class="form-group">
             <label for="name">Name:</label>
@@ -55,9 +58,7 @@
         <button type="submit" class="btn btn-primary">Create</button>
         <a href="<c:url value='/books'/>" class="btn btn-secondary">Cancel</a>
     </form>
-    <c:if test="${not empty message}">
-        <div class="alert alert-info mt-3">${message}</div>
-    </c:if>
+
     </div>
 </div>
 <%@ include file="css/footer.jsp" %>

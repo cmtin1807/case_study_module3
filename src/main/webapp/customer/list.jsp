@@ -18,9 +18,9 @@
     <h1 class="mb-4">Customer List</h1>
     <a href="<c:url value='/customers?action=create'/>" class="btn btn-success">Add New Customer</a>
 
-    <!-- Hiển thị thông báo nếu có -->
+
     <c:if test="${not empty message}">
-        <div class="alert alert-info" role="alert">
+        <div class="alert alert-danger" role="alert">
                 ${message}
         </div>
     </c:if>

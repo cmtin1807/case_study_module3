@@ -115,12 +115,12 @@ public class CategoryManagerServlet extends HttpServlet {
         if (category != null) {
             boolean isDeleted = categoryService.isDelete(id);
             if (isDeleted) {
-                messageCategory = "Category deleted successfully.";
+                messageCategory = "Xoá danh mục thành công.";
             } else {
-                messageCategory = "Failed to delete category.";
+                messageCategory = "Không xóa được danh mục, danh mục đang được sử dụng!";
             }
         } else {
-            messageCategory ="Category not found.";
+            messageCategory ="Không tìm thấy danh mục.";
         }
 
         request.getSession().setAttribute("messageCategory", messageCategory);
@@ -132,7 +132,7 @@ public class CategoryManagerServlet extends HttpServlet {
         String name = request.getParameter("name");
 
         if (name == null || name.trim().isEmpty()) {
-            request.setAttribute("errorMessage", "Name is required");
+            request.setAttribute("errorMessage", "Tên là bắt buộc");
             Category category = new Category();
             category.setId(id);
             category.setName(name);
@@ -152,7 +152,7 @@ public class CategoryManagerServlet extends HttpServlet {
         category.setId(id);
         category.setName(name);
         categoryService.update(id, category);
-         String   messageCategory = "Category updated successfully.";
+         String   messageCategory = "Danh mục được cập nhật thành công.";
             request.getSession().setAttribute("messageCategory", messageCategory);
         try {
             response.sendRedirect("categories");
@@ -165,7 +165,7 @@ public class CategoryManagerServlet extends HttpServlet {
     private void createCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("name");
         if (name == null || name.trim().isEmpty()) {
-            request.setAttribute("errorMessage", "Name is required");
+            request.setAttribute("errorMessage", "Tên là bắt buộc");
             RequestDispatcher dispatcher = request.getRequestDispatcher("category/create.jsp");
             dispatcher.forward(request, response);
             return;
@@ -174,7 +174,7 @@ public class CategoryManagerServlet extends HttpServlet {
         Category category = new Category();
         category.setName(name);
         categoryService.save(category);
-        String messageCategory = "Category created successfully.";
+        String messageCategory = "Danh mục được tạo thành công.";
         request.getSession().setAttribute("messageCategory", messageCategory);
 
         response.sendRedirect("categories");

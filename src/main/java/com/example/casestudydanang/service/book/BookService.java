@@ -46,5 +46,8 @@ public class BookService implements IBookService {
 
 return bookRepository.findByPublisherName(publisherName);
     }
+    public boolean isDelete(int id) {
+        return bookRepository.isDelete(id);
+    }
 }
 

@@ -24,9 +24,9 @@
             <h1>Book List</h1>
             <a href="<c:url value='/books?action=create'/>" class="btn btn-success">Add New Book</a>
         </div>
-        <c:if test="${not empty message}">
-            <div class="alert alert-info mt-3">
-                    ${message}
+        <c:if test="${not empty messageBook}">
+            <div class="alert alert-danger mt-3">
+                    ${messageBook}
             </div>
         </c:if>
         <div class="d-flex justify-content-between align-items-center mb-4">

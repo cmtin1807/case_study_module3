@@ -91,3 +91,9 @@ WHERE
 ALTER TABLE Customers
     MODIFY COLUMN customer_is_active BOOLEAN DEFAULT FALSE;
 select count(*) from Customers;
+DELIMITER //
+CREATE PROCEDURE deleteBook(IN bookId INT)
+BEGIN
+    DELETE FROM book WHERE book_id = bookId;
+END //
+DELIMITER ;

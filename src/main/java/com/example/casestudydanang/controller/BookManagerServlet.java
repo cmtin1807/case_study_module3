@@ -244,22 +244,23 @@ public class BookManagerServlet extends HttpServlet {
         }
     }
 
-    private void deleteBook(HttpServletRequest request, HttpServletResponse response) {
+    private void deleteBook(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         Book book = bookService.findById(id);
-        String message;
-        if (book == null) {
-            message = "Sách không tồn tại";
+        String messageBook;
+        if (book != null) {
+            boolean isDeleted = bookService.isDelete(id);
+            if (isDeleted) {
+                messageBook = "Sách đã được xóa thành công";
+                bookService.delete(id);
+            } else {
+                messageBook = "Sách đang cho mượn nên không thể xóa.";
+            }
         } else {
-            message = "Đã xóa thành công sách";
-            bookService.delete(id);
+            messageBook ="Sách không tồn tại";
         }
-        request.setAttribute("message", message);
-
-        showListBook(request,response);
-
-
-
+        request.getSession().setAttribute("messageBook", messageBook);
+        response.sendRedirect("/books");
     }
 
 
@@ -293,9 +294,9 @@ public class BookManagerServlet extends HttpServlet {
 
         try {
             bookService.save(book);
-            request.setAttribute("message", "Book created successfully!");
+            request.setAttribute("message", "Thêm sách thành công!");
         } catch (Exception e) {
-            request.setAttribute("message", "Error creating book: " + e.getMessage());
+            request.setAttribute("message", "Thêm sách bị lỗi: " + e.getMessage());
         }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("book/create.jsp");

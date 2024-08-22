@@ -193,4 +193,16 @@ public class BookRepository implements IBookRepository {
         }
         return books;
     }
+    public boolean isDelete(int id) {
+        String sql = "{CALL deleteBook(?)}";
+        try (Connection connection = Database.getConnection();
+             CallableStatement statement = connection.prepareCall(sql)) {
+            statement.setInt(1, id);
+            int rowsAffected = statement.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

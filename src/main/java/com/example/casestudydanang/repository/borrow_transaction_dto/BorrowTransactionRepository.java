@@ -20,20 +20,21 @@ public class BorrowTransactionRepository implements IBorrowTransactionRepository
             "join Book on borrow_transactions.book_id = Book.book_id " +
             "join category on Book.category_id = category.category_id " +
             "join publisher on Book.publisher_id = publisher.publisher_id " +
-            "WHERE Customers.customer_is_active = true;";
+            "WHERE Customers.customer_is_active = true " +
+            "ORDER BY borrow_transactions_id asc ;";
     private static final String SHOW_LIST_BASIC_BORROWS = "select borrow_transactions_id, customer_name, customer_code, name, status_borrow_type from Customers " +
             "join borrow_transactions  on Customers.customer_id = borrow_transactions.customer_id " +
             "join Book on borrow_transactions.book_id = Book.book_id " +
-            "join status_borrow on borrow_transactions.status_borrow_id = status_borrow.status_borrow_id " ;
-//            "where Customers.customer_is_active = true;";
-    private static final String SHOW_BORROW_BY_ID ="select borrow_transactions_id, customer_name, customer_code, customer_class, customer_address, customer_birthday, name, image_url, status, category_name, publisher_name, borrow_date, return_date, status_borrow_type from customers\n" +
+            "join status_borrow on borrow_transactions.status_borrow_id = status_borrow.status_borrow_id ORDER BY borrow_transactions_id asc ";
+    //            "where Customers.customer_is_active = true;";
+    private static final String SHOW_BORROW_BY_ID = "select borrow_transactions_id, customer_name, customer_code, customer_class, customer_address, customer_birthday, name, image_url, status, category_name, publisher_name, borrow_date, return_date, status_borrow_type from customers\n" +
             "            join borrow_transactions on customers.customer_id = borrow_transactions.customer_id\n" +
             "            join status_borrow on borrow_transactions.status_borrow_id = status_borrow.status_borrow_id\n" +
             "            join Book on borrow_transactions.book_id = Book.book_id\n" +
             "            join category on Book.category_id = category.category_id\n" +
             "            join publisher on Book.publisher_id = publisher.publisher_id\n" +
             "            WHERE  borrow_transactions_id = ?;";
-    private static final String SHOW_BORROW_BY_CODE_CUSTOMER ="select borrow_transactions_id, customer_name, customer_code, name, status_borrow_type from Customers\n" +
+    private static final String SHOW_BORROW_BY_CODE_CUSTOMER = "select borrow_transactions_id, customer_name, customer_code, name, status_borrow_type from Customers\n" +
             "join  borrow_transactions on Customers.customer_id = borrow_transactions.customer_id\n" +
             "join Book on borrow_transactions.book_id = Book.book_id\n" +
             "join status_borrow on borrow_transactions.status_borrow_id = status_borrow.status_borrow_id\n" +
@@ -144,7 +145,7 @@ public class BorrowTransactionRepository implements IBorrowTransactionRepository
                 String nameBook = rs.getString("name");
                 String statusBorrowType = rs.getString("status_borrow_type");
 
-                BorrowTransactionDTO borrowTransactionDTO = new BorrowTransactionDTO(id, nameCustomer, codeCustomer,  nameBook, statusBorrowType);
+                BorrowTransactionDTO borrowTransactionDTO = new BorrowTransactionDTO(id, nameCustomer, codeCustomer, nameBook, statusBorrowType);
                 borrowTransactionDTOList.add(borrowTransactionDTO);
             }
         } catch (SQLException e) {
